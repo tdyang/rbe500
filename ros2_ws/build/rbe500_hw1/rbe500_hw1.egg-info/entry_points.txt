@@ -1,0 +1,3 @@
+[console_scripts]
+publisher = rbe500_hw1.publisher:main
+subscriber = rbe500_hw1.subscriber:main
