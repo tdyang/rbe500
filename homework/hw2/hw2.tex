@@ -11,10 +11,17 @@
 \usepackage{enumitem}       % better lists
 \usepackage{caption}
 \usepackage{dirtree}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
 
+\graphicspath{{./screenshots/}}
 \geometry{margin=1in}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
+\tolerance=1000
+\emergencystretch=\maxdimen
+\usetikzlibrary{arrows.meta}
 
 % --- Code styling ---
 \lstset{
@@ -30,19 +37,8 @@
     backgroundcolor=\color{gray!10}
 }
 
-% --- Title ---
-\title{RBE 500 -- Homework 2}
-\author{Tracy}
-\date{\today}
-
-% ============================================================
 \begin{document}
-\maketitle
-\tableofcontents
-\newpage
-
-% ============================================================
-\section{Part 1: Problem Set}
+\section{Problem Set}
 
 % ----------
 \textbf{Problem 2-35: Verify Equation (2.67).} 
@@ -102,6 +98,77 @@ T_{y,1} = \begin{bmatrix}
 \end{bmatrix}
 \]
 
+Sketching it out, we have:
+\begin{center}
+    \begin{tikzpicture}[scale=2.0,
+        axis/.style={-{Stealth[length=6pt]}, line width=1.2pt},
+        dashpath/.style={dashed, gray, line width=0.8pt},
+        lbl/.style={font=\small}
+    ]
+
+    % -----------------------------------------------
+    % Base frame o0 at (0, 0)
+    % -----------------------------------------------
+    \coordinate (O0) at (0,0);
+
+    \draw[axis, red]            (O0) -- ++(2.2, 0) node[right]{$x_0$};
+    \draw[axis, green!60!black] (O0) -- ++(0,  1.6) node[above]{$y_0$};
+
+    \draw (O0) circle (3.5pt);
+    \fill (O0) circle (1.5pt);
+    \node[lbl, left=8pt]  at (O0) {$z_0$};
+    \node[lbl, below=6pt] at (O0) {$o_0$};
+
+    % -----------------------------------------------
+    % L-shaped dashed construction path
+    % Horizontal leg at y = -0.35 from x=0 to x=3
+    % Vertical leg at x=3 from y=-0.35 up to y=1
+    % -----------------------------------------------
+
+    % Horizontal leg: Tx,3
+    \draw[dashpath] (0,-0.35) -- (3,-0.35);
+    \node[gray, font=\footnotesize, below] at (1.5,-0.35) {$T_{x,3}$};
+
+    % Dotted connectors linking path endpoints to axes
+    \draw[dotted, gray, thin] (0, 0) -- (0,-0.35);
+    \draw[dotted, gray, thin] (3,-0.35) -- (3, 0);
+
+    % Rotation arc at the CORNER (3, -0.35) between the two legs
+    \draw[-{Stealth[length=4pt]}, gray]
+        (3,-0.35) ++(0.32, 0)
+        arc[start angle=0, end angle=90, radius=0.32];
+    \node[gray, font=\footnotesize, right=4pt] at (3.32,-0.12)
+        {$R_{z,\frac{\pi}{2}}$};
+
+    % Vertical leg: Ty,1 from corner up to o1 height
+    \draw[dashpath] (3,-0.35) -- (3, 1);
+    \node[gray, font=\footnotesize, left=4pt] at (3, 0.3) {$T_{y,1}$};
+
+    % -----------------------------------------------
+    % Final frame o1 at (3, 1)
+    % -----------------------------------------------
+    \coordinate (O1) at (3,1);
+
+    % x1: up
+    \draw[axis, red]            (O1) -- ++(0,  1.4) node[right]{$x_1$};
+    % y1: left
+    \draw[axis, green!60!black] (O1) -- ++(-1.6, 0) node[left]{$y_1$};
+
+    % z1: out of page — label directly above
+    \draw (O1) circle (3.5pt);
+    \fill (O1) circle (1.5pt);
+    \node[lbl, above=8pt]  at (O1) {$z_1$};
+
+    % o1 label below
+    \fill[black] (O1) circle (2pt);
+    \node[lbl, below=6pt]  at (O1) {$o_1$};
+
+    % coordinates to the right
+    \node[lbl, right=14pt] at (O1) {$= (3,\ 1,\ 0)$};
+
+    \end{tikzpicture}
+\end{center}
+
 Computing $T_{x,3} \cdot R_{z,\frac{\pi}{2}}$:
 \[
 T_{x,3} \cdot R_{z,\frac{\pi}{2}} = \begin{bmatrix}
@@ -122,7 +189,7 @@ H = \begin{bmatrix}
 \end{bmatrix}
 \]
 
-The origin $o_1$ expressed in the base frame is the translation vector (last column):
+The origin $o_1$ expressed in the base frame is the translation vector:
 \[
 o_1 = \begin{bmatrix} 3 \\ 1 \\ 0 \end{bmatrix}
 \]
@@ -133,7 +200,7 @@ representing the transformations among the three frames shown. Show that $H_2^0 
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.3\textwidth]{screenshots/fig2_13.png}
+    \includegraphics[width=0.3\textwidth]{fig2_13.png}
     \label{fig:fig2.13}
 \end{figure}
 
@@ -162,10 +229,13 @@ H_2^0 =
 \]
 
 \textbf{Inverse of $H_1^0$:}
+
+Using $H^{-1} = \begin{bmatrix} R^T & -R^T d \\ 0 & 1 \end{bmatrix}$ with
+$d = [0,0,1]^T$: $\;R^T d = [-1,0,0]^T$, so $-R^T d = [1,0,0]^T$.
 \[
-(H_1^0)^{-1} = 
+(H_1^0)^{-1} =
 \begin{bmatrix}
- 0 & 0 & -1 & -1 \\
+ 0 & 0 & -1 &  1 \\
  0 & 1 &  0 &  0 \\
  1 & 0 &  0 &  0 \\
  0 & 0 &  0 &  1
@@ -173,12 +243,11 @@ H_2^0 =
 \]
 
 \textbf{Transformation $H_2^1$:}
-\[
 \begin{align*}
     H_2^1 &= (H_1^0)^{-1} \cdot H_2^0\\
     &=
     \begin{bmatrix}
-        0 & 0 & -1 & -1\\
+        0 & 0 & -1 &  1\\
         0 & 1 &  0 &  0\\
         1 & 0 &  0 &  0\\
         0 & 0 &  0 &  1\\
@@ -191,12 +260,36 @@ H_2^0 =
     \end{bmatrix}\\
     &=
     \begin{bmatrix}
-         0 & -1 &  0 & -1\\
+         0 & -1 &  0 &  1\\
         -1 &  0 &  0 &  1\\
          0 &  0 & -1 &  0\\
          0 &  0 &  0 &  1\\
     \end{bmatrix}\\
 \end{align*}
+
+\textbf{Verification that $H_2^0 = H_1^0 \cdot H_2^1$:}
+\[
+H_1^0 \cdot H_2^1 =
+\begin{bmatrix}
+ 0 & 0 & 1 & 0\\
+ 0 & 1 & 0 & 0\\
+-1 & 0 & 0 & 1\\
+ 0 & 0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+ 0 & -1 &  0 & 1\\
+-1 &  0 &  0 & 1\\
+ 0 &  0 & -1 & 0\\
+ 0 &  0 &  0 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+ 0 &  0 & -1 & 0\\
+-1 &  0 &  0 & 1\\
+ 0 &  1 &  0 & 0\\
+ 0 &  0 &  0 & 1
+\end{bmatrix}
+= H_2^0 \quad \checkmark
 \]
 
 % ----------
@@ -205,11 +298,11 @@ meter high an 1 meter square. A frame $o_1 x_1 y_1 z_1$ is fixed to the edge of 
 A cube measuring 20 cm on a side is placed in the center of the table with frame $o_2 x_2 y_2 z_2$
 established at the center of the cube as shown. A camera is situated directly above the center of
 the block 2 meters above the table top with frame $o_3 x_3 y_3 z_3$ attached as shown. Find the
-homogenous transformation relating the frame $o_2 x_2 y_2 z_2$ to the camera frame $o_3 x_3 y_3 z_3$.} \\\\
+homogenous transformation relating the frame $o_2 x_2 y_2 z_2$ to the camera frame $o_3 x_3 y_3 z_3$.} \\
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.4\textwidth]{screenshots/fig2_14.png}
+    \includegraphics[width=0.4\textwidth]{fig2_14.png}
     \label{fig:fig2.14}
 \end{figure}
 
@@ -225,55 +318,70 @@ is 1m high and 1m square, the cube is 20cm on a side (so its center is
     $y_0$, and 1.1m along $z_0$ (1m table + 0.1m half-cube height),
     same orientation as Frame 0
     \item Frame 3: camera, directly above cube center at 3m height,
-    same orientation as Frame 0
+    different orientation to Frame 0
 \end{itemize}
 
 \textbf{Homogeneous transformations relative to Frame 0:}
 \[
 H_1^0 = 
 \begin{bmatrix}
-1 & 0 & 0 & 0 \\
-0 & 1 & 0 & 1 \\
-0 & 0 & 1 & 1 \\
-0 & 0 & 0 & 1
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 1 \\
+    0 & 0 & 1 & 1 \\
+    0 & 0 & 0 & 1
 \end{bmatrix}
 \quad
 H_2^0 = 
 \begin{bmatrix}
-1 & 0 & 0 & -0.5 \\
-0 & 1 & 0 &  1.5 \\
-0 & 0 & 1 &  1.1 \\
-0 & 0 & 0 &    1
+    1 & 0 & 0 & -0.5 \\
+    0 & 1 & 0 &  1.5 \\
+    0 & 0 & 1 &  1.1 \\
+    0 & 0 & 0 &    1
 \end{bmatrix}
 \quad
 H_3^0 = 
 \begin{bmatrix}
-1 & 0 & 0 & -0.5 \\
-0 & 1 & 0 &  1.5 \\
-0 & 0 & 1 &    3 \\
-0 & 0 & 0 &    1
+    0 & 1 &  0 & -0.5 \\
+    1 & 0 &  0 &  1.5 \\
+    0 & 0 & -1 &    3 \\
+    0 & 0 &  0 &    1
 \end{bmatrix}
 \]
 
 \textbf{Finding $H_2^3 = (H_3^0)^{-1} \cdot H_2^0$:}
 
-Since Frame 3 has no rotation relative to Frame 0 (i.e.\ $R_3^0 = I$),
-the inverse simplifies to:
+The inverse of Frame 3 simplifies to:
 \[
-(H_3^0)^{-1} = \begin{bmatrix}
-1 & 0 & 0 &  0.5 \\
-0 & 1 & 0 & -1.5 \\
-0 & 0 & 1 &   -3 \\
-0 & 0 & 0 &    1
+(H_3^0)^{-1} = 
+\begin{bmatrix}
+    0 & 1 &  0 & -1.5 \\
+    1 & 0 &  0 &  0.5 \\
+    0 & 0 & -1 &    3 \\
+    0 & 0 &  0 &    1
 \end{bmatrix}
 \]
 
 \[
 H_2^3 = (H_3^0)^{-1} \cdot H_2^0 =
-\begin{bmatrix} 1 & 0 & 0 & 0.5\\ 0 & 1 & 0 & -1.5\\ 0 & 0 & 1 & -3\\ 0 & 0 & 0 & 1\end{bmatrix}
-\begin{bmatrix} 1 & 0 & 0 & -0.5\\ 0 & 1 & 0 & 1.5\\ 0 & 0 & 1 & 1.1\\ 0 & 0 & 0 & 1\end{bmatrix}
+\begin{bmatrix}
+    0 & 1 &  0 & -1.5 \\
+    1 & 0 &  0 &  0.5 \\
+    0 & 0 & -1 &    3 \\
+    0 & 0 &  0 &    1
+\end{bmatrix}
+\begin{bmatrix} 
+    1 & 0 & 0 & -0.5\\ 
+    0 & 1 & 0 &  1.5\\ 
+    0 & 0 & 1 &  1.1\\ 
+    0 & 0 & 0 &  1
+\end{bmatrix}
 =
-\begin{bmatrix} 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 0\\ 0 & 0 & 1 & -1.9\\ 0 & 0 & 0 & 1\end{bmatrix}
+\begin{bmatrix}
+    0 & 1 &  0 &   0\\
+    1 & 0 &  0 &   0\\
+    0 & 0 & -1 & 1.9\\
+    0 & 0 &  0 &   1
+\end{bmatrix}
 \]
 
 The translation vector $(0, 0, 1.9)^T$ confirms that the cube center lies directly below the camera
@@ -284,7 +392,7 @@ at a distance of $2 - 0.1 = 1.9$ meters, which is consistent with the geometry i
 matrix product\[ H = R_{x,\alpha} \cdot T_{x,b} \cdot T_{z,d} \cdot R_{z,\theta} \]
 Determine which pairs of the four matrices on the right-hand side commute. Explain why these pairs
 commute. Find all permutations of these four matrices that yield the same homogenous transformation
-matrix, $H$.} \\\\
+matrix, $H$.} \\
 
 The four matrices are:
 \[
@@ -325,34 +433,65 @@ R_{z,\theta} =
 \textbf{Commuting Pairs:}
 
 \begin{itemize}
-    \item $R_{x,\alpha}$ and $T_{x,b}$ \textbf{commute}: a rotation about
-    the $x$-axis and a translation along the $x$-axis act independently.
-    \item $T_{x,b}$ and $T_{z,d}$ \textbf{commute}: pure translations
-    always commute regardless of direction.
-    \item $T_{z,d}$ and $R_{z,\theta}$ \textbf{commute}: a translation
-    along the $z$-axis and a rotation about the $z$-axis act independently.
-    \item All other pairs \textbf{do not commute}.
+    \item $R_{x,\alpha}$ and $T_{x,b}$: a rotation about
+    the $x$-axis and a translation along the $x$-axis act independently,
+    since both operate purely along the $x$-axis.
+    \item $T_{x,b}$ and $T_{z,d}$: pure translations
+    always commute regardless of direction, as they only affect the
+    translation vector and do not interact.
+    \item $T_{z,d}$ and $R_{z,\theta}$: a translation
+    along the $z$-axis and a rotation about the $z$-axis act independently,
+    since the $z$-component is unaffected by rotation about $z$.
+    \item All other pairs \textbf{do not commute}: specifically,
+    $R_{x,\alpha}$ does not commute with $T_{z,d}$ or $R_{z,\theta}$,
+    and $T_{x,b}$ does not commute with $R_{z,\theta}$.
 \end{itemize}
 
 \textbf{Valid Permutations:}
 
-Using the commuting pairs to swap neighbors, the following permutations
-all yield the same $H$:
+The three commuting pairs define a chain:
+\[
+R_{x,\alpha} \leftrightarrow T_{x,b} \leftrightarrow T_{z,d} \leftrightarrow R_{z,\theta}
+\]
+where each $\leftrightarrow$ denotes a pair that may be swapped freely.
+However, these swaps are \emph{not} independent: swapping $T_{x,b}$ and
+$T_{z,d}$ (the middle pair) separates $T_{z,d}$ from $R_{z,\theta}$,
+making that swap unavailable in the resulting ordering. Exhausting all
+valid adjacent swaps yields exactly five permutations:
 
 \begin{enumerate}
     \item $R_{x,\alpha} \cdot T_{x,b} \cdot T_{z,d} \cdot R_{z,\theta}$
+    \quad (original)
     \item $T_{x,b} \cdot R_{x,\alpha} \cdot T_{z,d} \cdot R_{z,\theta}$
+    \quad (swap $R_{x,\alpha} \leftrightarrow T_{x,b}$)
     \item $R_{x,\alpha} \cdot T_{x,b} \cdot R_{z,\theta} \cdot T_{z,d}$
+    \quad (swap $T_{z,d} \leftrightarrow R_{z,\theta}$)
     \item $T_{x,b} \cdot R_{x,\alpha} \cdot R_{z,\theta} \cdot T_{z,d}$
+    \quad (swap both endpoints)
     \item $R_{x,\alpha} \cdot T_{z,d} \cdot T_{x,b} \cdot R_{z,\theta}$
+    \quad (swap $T_{x,b} \leftrightarrow T_{z,d}$)
 \end{enumerate}
+
+No further reorderings are possible: once $T_{x,b}$ and $T_{z,d}$ are
+swapped (permutation 5), $T_{z,d}$ is no longer adjacent to $R_{z,\theta}$
+and cannot be swapped with it; $T_{x,b}$ is no longer adjacent to
+$R_{x,\alpha}$ and cannot be swapped with it; and $R_{x,\alpha}$ is now
+adjacent to $T_{z,d}$, with which it does \emph{not} commute. All other
+arrangements therefore produce a different $H$.
+
 \newpage
 
 % ============================================================
-\section{Part 2: ROS 2 Assignment}
+\section{ROS 2 Assignment}
 
 \subsection{Overview}
-Brief description of what the node does.
+This package implements a ROS 2 node that subscribes to a \texttt{/quaternion} topic
+carrying a \texttt{Float32MultiArray} message with four values $[w, x, y, z]$ and
+converts the quaternion to ZYX Euler angles (roll $\phi$, pitch $\theta$, yaw $\psi$).
+The conversion uses the standard formulas from the Wikipedia ``Conversion between
+quaternions and Euler angles'' article, with a gimbal-lock guard on the pitch term.
+The resulting angles are printed to the terminal in both radians and degrees each time
+a new quaternion is received.
 
 \subsection{Package Structure}
 \dirtree{%
@@ -368,21 +507,80 @@ Brief description of what the node does.
 \subsection{Node Implementation}
 
 \begin{lstlisting}
-# Paste your Python code here
 import rclpy
 from rclpy.node import Node
-...
+from std_msgs.msg import Float32MultiArray
+import math
+
+class QuatToEulerNode(Node):
+    def __init__(self):
+        super().__init__('quat_to_euler')
+        self.subscription = self.create_subscription(
+            Float32MultiArray,
+            'quaternion',
+            self.listener_callback,
+            10)
+        self.get_logger().info('Quaternion to Euler node started.')
+        self.get_logger().info('Waiting for quaternion input [w, x, y, z]...')
+
+    def listener_callback(self, msg):
+        if len(msg.data) != 4:
+            self.get_logger().error(
+                f'Expected 4 values [w, x, y, z], got {len(msg.data)}')
+            return
+
+        w, x, y, z = msg.data
+
+        norm = math.sqrt(w**2 + x**2 + y**2 + z**2)
+        if abs(norm - 1.0) > 0.01:
+            self.get_logger().warn(
+                f'Quaternion norm is {norm:.4f}, expected 1.0. '
+                f'Results may be inaccurate.')
+
+        sinr_cosp = 2.0 * (w * x + y * z)
+        cosr_cosp = 1.0 - 2.0 * (x * x + y * y)
+        phi = math.atan2(sinr_cosp, cosr_cosp)
+
+        sinp = 2.0 * (w * y - z * x)
+        if abs(sinp) >= 1.0:
+            theta = math.copysign(math.pi / 2, sinp)
+        else:
+            theta = math.asin(sinp)
+
+        siny_cosp = 2.0 * (w * z + x * y)
+        cosy_cosp = 1.0 - 2.0 * (y * y + z * z)
+        psi = math.atan2(siny_cosp, cosy_cosp)
+
+        phi_deg   = math.degrees(phi)
+        theta_deg = math.degrees(theta)
+        psi_deg   = math.degrees(psi)
+
+        self.get_logger().info(
+            f'\nReceived quaternion: w={w}, x={x}, y={y}, z={z}\n'
+            f'  Roll  (phi)   = {phi:.4f} rad = {phi_deg:.2f} deg\n'
+            f'  Pitch (theta) = {theta:.4f} rad = {theta_deg:.2f} deg\n'
+            f'  Yaw   (psi)   = {psi:.4f} rad = {psi_deg:.2f} deg')
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = QuatToEulerNode()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
 \end{lstlisting}
 
 \subsection{Conversion Formulas}
 
 The quaternion $(w, x, y, z)$ is converted to Euler angles $(\phi, \theta, \psi)$ using:
 
-\begin{align}
-\phi   &= \arctan2\!\left(2(wx + yz),\; 1 - 2(x^2 + y^2)\right) \\
-\theta &= \arcsin\!\left(2(wy - zx)\right) \\
-\psi   &= \arctan2\!\left(2(wz + xy),\; 1 - 2(y^2 + z^2)\right)
-\end{align}
+\begin{align*}
+    \phi   &= \arctan2\!\left(2(wx + yz),\; 1 - 2(x^2 + y^2)\right) \\
+    \theta &= \arcsin\!\left(2(wy - zx)\right) \\
+    \psi   &= \arctan2\!\left(2(wz + xy),\; 1 - 2(y^2 + z^2)\right)
+\end{align*}
 
 \subsection{How to Run}
 
@@ -390,19 +588,24 @@ The quaternion $(w, x, y, z)$ is converted to Euler angles $(\phi, \theta, \psi)
 ros2 run quat_to_euler quat_to_euler_node
 \end{verbatim}
 
-Publish a test quaternion from the terminal:
+Publish test quaternions from the terminal:
 \begin{verbatim}
 ros2 topic pub /quaternion std_msgs/msg/Float32MultiArray \
   "data: [1.0, 0.0, 0.0, 0.0]"
+
+ros2 topic pub --once /quaternion std_msgs/msg/Float32MultiArray \
+  "data: [0.7071, 0.0, 0.0, 0.7071]"
+
+ros2 topic pub --once /quaternion std_msgs/msg/Float32MultiArray \
+  "data: [0.7071, 0.7071, 0.0, 0.0]"
 \end{verbatim}
 
 \subsection{Results}
 
-% To include a screenshot:
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{screenshot.png}
-%     \caption{Terminal output showing Euler angle conversion}
-% \end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{terminal_output.png}
+    \caption{Terminal output showing Euler angle conversion}
+\end{figure}
 
 \end{document}

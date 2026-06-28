@@ -1,0 +1,2 @@
+[console_scripts]
+fk_node = irb1400_fk.fk_node:main

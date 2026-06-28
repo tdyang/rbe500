@@ -1,0 +1,35 @@
+running egg_info
+creating ../../build/quat_to_euler/quat_to_euler.egg-info
+writing ../../build/quat_to_euler/quat_to_euler.egg-info/PKG-INFO
+writing dependency_links to ../../build/quat_to_euler/quat_to_euler.egg-info/dependency_links.txt
+writing entry points to ../../build/quat_to_euler/quat_to_euler.egg-info/entry_points.txt
+writing requirements to ../../build/quat_to_euler/quat_to_euler.egg-info/requires.txt
+writing top-level names to ../../build/quat_to_euler/quat_to_euler.egg-info/top_level.txt
+writing manifest file '../../build/quat_to_euler/quat_to_euler.egg-info/SOURCES.txt'
+reading manifest file '../../build/quat_to_euler/quat_to_euler.egg-info/SOURCES.txt'
+writing manifest file '../../build/quat_to_euler/quat_to_euler.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/tracy/rbe500/ros2_ws/build/quat_to_euler/build
+creating /home/tracy/rbe500/ros2_ws/build/quat_to_euler/build/lib
+creating /home/tracy/rbe500/ros2_ws/build/quat_to_euler/build/lib/quat_to_euler
+copying quat_to_euler/quat_to_euler_node.py -> /home/tracy/rbe500/ros2_ws/build/quat_to_euler/build/lib/quat_to_euler
+copying quat_to_euler/__init__.py -> /home/tracy/rbe500/ros2_ws/build/quat_to_euler/build/lib/quat_to_euler
+running install
+running install_lib
+creating /home/tracy/rbe500/ros2_ws/install/quat_to_euler/lib/python3.12/site-packages/quat_to_euler
+copying /home/tracy/rbe500/ros2_ws/build/quat_to_euler/build/lib/quat_to_euler/quat_to_euler_node.py -> /home/tracy/rbe500/ros2_ws/install/quat_to_euler/lib/python3.12/site-packages/quat_to_euler
+copying /home/tracy/rbe500/ros2_ws/build/quat_to_euler/build/lib/quat_to_euler/__init__.py -> /home/tracy/rbe500/ros2_ws/install/quat_to_euler/lib/python3.12/site-packages/quat_to_euler
+byte-compiling /home/tracy/rbe500/ros2_ws/install/quat_to_euler/lib/python3.12/site-packages/quat_to_euler/quat_to_euler_node.py to quat_to_euler_node.cpython-312.pyc
+byte-compiling /home/tracy/rbe500/ros2_ws/install/quat_to_euler/lib/python3.12/site-packages/quat_to_euler/__init__.py to __init__.cpython-312.pyc
+running install_data
+creating /home/tracy/rbe500/ros2_ws/install/quat_to_euler/share/ament_index
+creating /home/tracy/rbe500/ros2_ws/install/quat_to_euler/share/ament_index/resource_index
+creating /home/tracy/rbe500/ros2_ws/install/quat_to_euler/share/ament_index/resource_index/packages
+copying resource/quat_to_euler -> /home/tracy/rbe500/ros2_ws/install/quat_to_euler/share/ament_index/resource_index/packages
+copying package.xml -> /home/tracy/rbe500/ros2_ws/install/quat_to_euler/share/quat_to_euler
+running install_egg_info
+Copying ../../build/quat_to_euler/quat_to_euler.egg-info to /home/tracy/rbe500/ros2_ws/install/quat_to_euler/lib/python3.12/site-packages/quat_to_euler-0.0.0-py3.12.egg-info
+running install_scripts
+Installing quat_to_euler_node script to /home/tracy/rbe500/ros2_ws/install/quat_to_euler/lib/quat_to_euler
+writing list of installed files to '/home/tracy/rbe500/ros2_ws/build/quat_to_euler/install.log'

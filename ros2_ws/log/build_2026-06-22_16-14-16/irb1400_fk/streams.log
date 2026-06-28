@@ -1,0 +1,37 @@
+[0.937s] Invoking command in '/home/tracy/rbe500/ros2_ws/src/irb1400_fk': PYTHONPATH=/home/tracy/rbe500/ros2_ws/build/irb1400_fk/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/irb1400_fk build --build-base /home/tracy/rbe500/ros2_ws/build/irb1400_fk/build install --record /home/tracy/rbe500/ros2_ws/build/irb1400_fk/install.log --single-version-externally-managed install_data
+[1.155s] running egg_info
+[1.156s] creating ../../build/irb1400_fk/irb1400_fk.egg-info
+[1.172s] writing ../../build/irb1400_fk/irb1400_fk.egg-info/PKG-INFO
+[1.172s] writing dependency_links to ../../build/irb1400_fk/irb1400_fk.egg-info/dependency_links.txt
+[1.172s] writing entry points to ../../build/irb1400_fk/irb1400_fk.egg-info/entry_points.txt
+[1.173s] writing requirements to ../../build/irb1400_fk/irb1400_fk.egg-info/requires.txt
+[1.174s] writing top-level names to ../../build/irb1400_fk/irb1400_fk.egg-info/top_level.txt
+[1.174s] writing manifest file '../../build/irb1400_fk/irb1400_fk.egg-info/SOURCES.txt'
+[1.207s] reading manifest file '../../build/irb1400_fk/irb1400_fk.egg-info/SOURCES.txt'
+[1.207s] writing manifest file '../../build/irb1400_fk/irb1400_fk.egg-info/SOURCES.txt'
+[1.208s] running build
+[1.208s] running build_py
+[1.208s] creating /home/tracy/rbe500/ros2_ws/build/irb1400_fk/build
+[1.208s] creating /home/tracy/rbe500/ros2_ws/build/irb1400_fk/build/lib
+[1.208s] creating /home/tracy/rbe500/ros2_ws/build/irb1400_fk/build/lib/irb1400_fk
+[1.209s] copying irb1400_fk/fk_node.py -> /home/tracy/rbe500/ros2_ws/build/irb1400_fk/build/lib/irb1400_fk
+[1.209s] copying irb1400_fk/__init__.py -> /home/tracy/rbe500/ros2_ws/build/irb1400_fk/build/lib/irb1400_fk
+[1.209s] running install
+[1.214s] running install_lib
+[1.232s] creating /home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/python3.12/site-packages/irb1400_fk
+[1.233s] copying /home/tracy/rbe500/ros2_ws/build/irb1400_fk/build/lib/irb1400_fk/fk_node.py -> /home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/python3.12/site-packages/irb1400_fk
+[1.233s] copying /home/tracy/rbe500/ros2_ws/build/irb1400_fk/build/lib/irb1400_fk/__init__.py -> /home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/python3.12/site-packages/irb1400_fk
+[1.233s] byte-compiling /home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/python3.12/site-packages/irb1400_fk/fk_node.py to fk_node.cpython-312.pyc
+[1.235s] byte-compiling /home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/python3.12/site-packages/irb1400_fk/__init__.py to __init__.cpython-312.pyc
+[1.235s] running install_data
+[1.235s] creating /home/tracy/rbe500/ros2_ws/install/irb1400_fk/share/ament_index
+[1.236s] creating /home/tracy/rbe500/ros2_ws/install/irb1400_fk/share/ament_index/resource_index
+[1.236s] creating /home/tracy/rbe500/ros2_ws/install/irb1400_fk/share/ament_index/resource_index/packages
+[1.236s] copying resource/irb1400_fk -> /home/tracy/rbe500/ros2_ws/install/irb1400_fk/share/ament_index/resource_index/packages
+[1.236s] copying package.xml -> /home/tracy/rbe500/ros2_ws/install/irb1400_fk/share/irb1400_fk
+[1.236s] running install_egg_info
+[1.254s] Copying ../../build/irb1400_fk/irb1400_fk.egg-info to /home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/python3.12/site-packages/irb1400_fk-0.0.0-py3.12.egg-info
+[1.255s] running install_scripts
+[1.361s] Installing fk_node script to /home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/irb1400_fk
+[1.362s] writing list of installed files to '/home/tracy/rbe500/ros2_ws/build/irb1400_fk/install.log'
+[1.406s] Invoked command in '/home/tracy/rbe500/ros2_ws/src/irb1400_fk' returned '0': PYTHONPATH=/home/tracy/rbe500/ros2_ws/build/irb1400_fk/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/irb1400_fk build --build-base /home/tracy/rbe500/ros2_ws/build/irb1400_fk/build install --record /home/tracy/rbe500/ros2_ws/build/irb1400_fk/install.log --single-version-externally-managed install_data

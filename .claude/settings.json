@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dwebp ROS2_1.png -o ROS2_1_real.png)",
+      "Bash(dwebp ROS2_2.png -o ROS2_2_real.png)",
+      "Bash(pdflatex -interaction=nonstopmode hw2.tex)"
+    ]
+  }
+}

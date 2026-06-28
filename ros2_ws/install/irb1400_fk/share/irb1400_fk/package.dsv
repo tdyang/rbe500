@@ -1,0 +1,6 @@
+source;share/irb1400_fk/hook/pythonpath.ps1
+source;share/irb1400_fk/hook/pythonpath.dsv
+source;share/irb1400_fk/hook/pythonpath.sh
+source;share/irb1400_fk/hook/ament_prefix_path.ps1
+source;share/irb1400_fk/hook/ament_prefix_path.dsv
+source;share/irb1400_fk/hook/ament_prefix_path.sh
