@@ -22,33 +22,26 @@ class QuatToEulerNode(Node):
 
         w, x, y, z = msg.data
 
-        # Validate it's a unit quaternion
         norm = math.sqrt(w**2 + x**2 + y**2 + z**2)
         if abs(norm - 1.0) > 0.01:
             self.get_logger().warn(
                 f'Quaternion norm is {norm:.4f}, expected 1.0. '
                 f'Results may be inaccurate.')
 
-        # Conversion formulas (ZYX convention, from Wikipedia)
-        # Roll (phi) - rotation about x
         sinr_cosp = 2.0 * (w * x + y * z)
         cosr_cosp = 1.0 - 2.0 * (x * x + y * y)
         phi = math.atan2(sinr_cosp, cosr_cosp)
 
-        # Pitch (theta) - rotation about y
         sinp = 2.0 * (w * y - z * x)
         if abs(sinp) >= 1.0:
-            # Gimbal lock: use 90 degrees
             theta = math.copysign(math.pi / 2, sinp)
         else:
             theta = math.asin(sinp)
 
-        # Yaw (psi) - rotation about z
         siny_cosp = 2.0 * (w * z + x * y)
         cosy_cosp = 1.0 - 2.0 * (y * y + z * z)
         psi = math.atan2(siny_cosp, cosy_cosp)
 
-        # Convert to degrees for readability
         phi_deg   = math.degrees(phi)
         theta_deg = math.degrees(theta)
         psi_deg   = math.degrees(psi)

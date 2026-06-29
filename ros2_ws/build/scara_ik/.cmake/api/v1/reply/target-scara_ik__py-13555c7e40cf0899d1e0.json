@@ -1,0 +1,79 @@
+{
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target"
+		],
+		"files" : 
+		[
+			"/home/tracy/rbe500/ros2_ws/build/scara_ik/scara_ik__py/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 36,
+				"parent" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "scara_ik::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "scara_ik__py::@b9e34aaecc2f3105b35d",
+	"name" : "scara_ik__py",
+	"paths" : 
+	{
+		"build" : "scara_ik__py",
+		"source" : "/home/tracy/rbe500/ros2_ws/build/scara_ik/scara_ik__py"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1,
+				2
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "/home/tracy/rbe500/ros2_ws/build/scara_ik/scara_ik__py/CMakeFiles/scara_ik__py",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "/home/tracy/rbe500/ros2_ws/build/scara_ik/scara_ik__py/CMakeFiles/scara_ik__py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "/home/tracy/rbe500/ros2_ws/build/scara_ik/rosidl_generator_py/scara_ik/_scara_ik_s.ep.rosidl_typesupport_fastrtps_c.c.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

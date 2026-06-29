@@ -1,0 +1,22 @@
+running egg_info
+writing ../../build/irb1400_fk/irb1400_fk.egg-info/PKG-INFO
+writing dependency_links to ../../build/irb1400_fk/irb1400_fk.egg-info/dependency_links.txt
+writing entry points to ../../build/irb1400_fk/irb1400_fk.egg-info/entry_points.txt
+writing requirements to ../../build/irb1400_fk/irb1400_fk.egg-info/requires.txt
+writing top-level names to ../../build/irb1400_fk/irb1400_fk.egg-info/top_level.txt
+reading manifest file '../../build/irb1400_fk/irb1400_fk.egg-info/SOURCES.txt'
+writing manifest file '../../build/irb1400_fk/irb1400_fk.egg-info/SOURCES.txt'
+running build
+running build_py
+copying irb1400_fk/fk_node.py -> /home/tracy/rbe500/ros2_ws/build/irb1400_fk/build/lib/irb1400_fk
+running install
+running install_lib
+copying /home/tracy/rbe500/ros2_ws/build/irb1400_fk/build/lib/irb1400_fk/fk_node.py -> /home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/python3.12/site-packages/irb1400_fk
+byte-compiling /home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/python3.12/site-packages/irb1400_fk/fk_node.py to fk_node.cpython-312.pyc
+running install_data
+running install_egg_info
+removing '/home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/python3.12/site-packages/irb1400_fk-0.0.0-py3.12.egg-info' (and everything under it)
+Copying ../../build/irb1400_fk/irb1400_fk.egg-info to /home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/python3.12/site-packages/irb1400_fk-0.0.0-py3.12.egg-info
+running install_scripts
+Installing fk_node script to /home/tracy/rbe500/ros2_ws/install/irb1400_fk/lib/irb1400_fk
+writing list of installed files to '/home/tracy/rbe500/ros2_ws/build/irb1400_fk/install.log'

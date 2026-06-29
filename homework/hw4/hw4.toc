@@ -1,0 +1,11 @@
+\contentsline {section}{Part 1: Inverse Kinematics}{2}{section*.2}%
+\contentsline {subsection}{Question 1: Inverse Position Kinematics (Geometric Approach)}{2}{section*.3}%
+\contentsline {subsection}{Question 2: Inverse Orientation Kinematics (Wrist Angles)}{3}{section*.4}%
+\contentsline {subsection}{Question 3: Numerical Solution for Given H}{4}{section*.5}%
+\contentsline {section}{Part 2: ROS 2 Node -- Inverse Kinematics}{6}{section*.6}%
+\contentsline {subsection}{Overview}{6}{section*.7}%
+\contentsline {subsection}{Package Structure}{6}{section*.8}%
+\contentsline {subsection}{Node Implementation}{6}{section*.9}%
+\contentsline {subsection}{How to Run}{11}{section*.10}%
+\contentsline {subsection}{Test Cases -- IK then FK Verification}{12}{section*.11}%
+\contentsline {subsection}{Results}{12}{section*.12}%

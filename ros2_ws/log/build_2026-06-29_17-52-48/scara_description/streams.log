@@ -1,0 +1,29 @@
+[0.021s] Invoking command in '/home/tracy/rbe500/ros2_ws/build/scara_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /home/tracy/rbe500/ros2_ws/build/scara_description -- -j16 -l16
+[0.100s] Invoked command in '/home/tracy/rbe500/ros2_ws/build/scara_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /home/tracy/rbe500/ros2_ws/build/scara_description -- -j16 -l16
+[0.114s] Invoking command in '/home/tracy/rbe500/ros2_ws/build/scara_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /home/tracy/rbe500/ros2_ws/build/scara_description
+[0.124s] -- Install configuration: ""
+[0.124s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/config
+[0.124s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/config/scara.config.xacro
+[0.124s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/config/materials.urdf
+[0.125s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/urdf
+[0.125s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/urdf/scara.urdf
+[0.125s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/ros2_control
+[0.125s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/ros2_control/scara.ros2_control.urdf
+[0.126s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/launch
+[0.126s] -- Installing: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/launch/scara.launch.py
+[0.126s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/ament_index/resource_index/package_run_dependencies/scara_description
+[0.126s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/ament_index/resource_index/parent_prefix_path/scara_description
+[0.126s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/environment/ament_prefix_path.sh
+[0.126s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/environment/ament_prefix_path.dsv
+[0.127s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/environment/path.sh
+[0.127s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/environment/path.dsv
+[0.127s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/local_setup.bash
+[0.127s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/local_setup.sh
+[0.127s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/local_setup.zsh
+[0.127s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/local_setup.dsv
+[0.127s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/package.dsv
+[0.127s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/ament_index/resource_index/packages/scara_description
+[0.127s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/cmake/scara_descriptionConfig.cmake
+[0.127s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/cmake/scara_descriptionConfig-version.cmake
+[0.127s] -- Up-to-date: /home/tracy/rbe500/ros2_ws/install/scara_description/share/scara_description/package.xml
+[0.129s] Invoked command in '/home/tracy/rbe500/ros2_ws/build/scara_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /home/tracy/rbe500/ros2_ws/build/scara_description

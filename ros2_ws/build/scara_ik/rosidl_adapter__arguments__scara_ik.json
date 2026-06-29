@@ -1,0 +1,6 @@
+{
+  "package_name": "scara_ik",
+  "non_idl_tuples": [
+    "/home/tracy/rbe500/ros2_ws/src/scara_ik:srv/ScaraIK.srv"
+  ]
+}

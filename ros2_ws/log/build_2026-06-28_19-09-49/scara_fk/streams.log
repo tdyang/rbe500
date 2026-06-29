@@ -1,0 +1,37 @@
+[1.209s] Invoking command in '/home/tracy/rbe500/ros2_ws/src/scara_fk': PYTHONPATH=/home/tracy/rbe500/ros2_ws/build/scara_fk/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/scara_fk build --build-base /home/tracy/rbe500/ros2_ws/build/scara_fk/build install --record /home/tracy/rbe500/ros2_ws/build/scara_fk/install.log --single-version-externally-managed install_data
+[1.468s] running egg_info
+[1.468s] creating ../../build/scara_fk/scara_fk.egg-info
+[1.487s] writing ../../build/scara_fk/scara_fk.egg-info/PKG-INFO
+[1.487s] writing dependency_links to ../../build/scara_fk/scara_fk.egg-info/dependency_links.txt
+[1.487s] writing entry points to ../../build/scara_fk/scara_fk.egg-info/entry_points.txt
+[1.488s] writing requirements to ../../build/scara_fk/scara_fk.egg-info/requires.txt
+[1.488s] writing top-level names to ../../build/scara_fk/scara_fk.egg-info/top_level.txt
+[1.488s] writing manifest file '../../build/scara_fk/scara_fk.egg-info/SOURCES.txt'
+[1.525s] reading manifest file '../../build/scara_fk/scara_fk.egg-info/SOURCES.txt'
+[1.526s] writing manifest file '../../build/scara_fk/scara_fk.egg-info/SOURCES.txt'
+[1.527s] running build
+[1.527s] running build_py
+[1.527s] creating /home/tracy/rbe500/ros2_ws/build/scara_fk/build
+[1.528s] creating /home/tracy/rbe500/ros2_ws/build/scara_fk/build/lib
+[1.528s] creating /home/tracy/rbe500/ros2_ws/build/scara_fk/build/lib/scara_fk
+[1.528s] copying scara_fk/fk_node.py -> /home/tracy/rbe500/ros2_ws/build/scara_fk/build/lib/scara_fk
+[1.528s] copying scara_fk/__init__.py -> /home/tracy/rbe500/ros2_ws/build/scara_fk/build/lib/scara_fk
+[1.529s] running install
+[1.535s] running install_lib
+[1.554s] creating /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk
+[1.555s] copying /home/tracy/rbe500/ros2_ws/build/scara_fk/build/lib/scara_fk/fk_node.py -> /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk
+[1.555s] copying /home/tracy/rbe500/ros2_ws/build/scara_fk/build/lib/scara_fk/__init__.py -> /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk
+[1.555s] byte-compiling /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk/fk_node.py to fk_node.cpython-312.pyc
+[1.557s] byte-compiling /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk/__init__.py to __init__.cpython-312.pyc
+[1.557s] running install_data
+[1.557s] creating /home/tracy/rbe500/ros2_ws/install/scara_fk/share/ament_index
+[1.557s] creating /home/tracy/rbe500/ros2_ws/install/scara_fk/share/ament_index/resource_index
+[1.558s] creating /home/tracy/rbe500/ros2_ws/install/scara_fk/share/ament_index/resource_index/packages
+[1.558s] copying resource/scara_fk -> /home/tracy/rbe500/ros2_ws/install/scara_fk/share/ament_index/resource_index/packages
+[1.558s] copying package.xml -> /home/tracy/rbe500/ros2_ws/install/scara_fk/share/scara_fk
+[1.558s] running install_egg_info
+[1.578s] Copying ../../build/scara_fk/scara_fk.egg-info to /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk-0.0.0-py3.12.egg-info
+[1.580s] running install_scripts
+[1.708s] Installing fk_node script to /home/tracy/rbe500/ros2_ws/install/scara_fk/bin
+[1.708s] writing list of installed files to '/home/tracy/rbe500/ros2_ws/build/scara_fk/install.log'
+[1.738s] Invoked command in '/home/tracy/rbe500/ros2_ws/src/scara_fk' returned '0': PYTHONPATH=/home/tracy/rbe500/ros2_ws/build/scara_fk/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/scara_fk build --build-base /home/tracy/rbe500/ros2_ws/build/scara_fk/build install --record /home/tracy/rbe500/ros2_ws/build/scara_fk/install.log --single-version-externally-managed install_data

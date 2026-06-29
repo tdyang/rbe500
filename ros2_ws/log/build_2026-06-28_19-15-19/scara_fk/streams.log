@@ -1,0 +1,21 @@
+[2.037s] Invoking command in '/home/tracy/rbe500/ros2_ws/src/scara_fk': PYTHONPATH=/home/tracy/rbe500/ros2_ws/build/scara_fk/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/scara_fk build --build-base /home/tracy/rbe500/ros2_ws/build/scara_fk/build install --record /home/tracy/rbe500/ros2_ws/build/scara_fk/install.log --single-version-externally-managed install_data
+[2.341s] running egg_info
+[2.363s] writing ../../build/scara_fk/scara_fk.egg-info/PKG-INFO
+[2.364s] writing dependency_links to ../../build/scara_fk/scara_fk.egg-info/dependency_links.txt
+[2.365s] writing entry points to ../../build/scara_fk/scara_fk.egg-info/entry_points.txt
+[2.365s] writing requirements to ../../build/scara_fk/scara_fk.egg-info/requires.txt
+[2.365s] writing top-level names to ../../build/scara_fk/scara_fk.egg-info/top_level.txt
+[2.410s] reading manifest file '../../build/scara_fk/scara_fk.egg-info/SOURCES.txt'
+[2.410s] writing manifest file '../../build/scara_fk/scara_fk.egg-info/SOURCES.txt'
+[2.410s] running build
+[2.411s] running build_py
+[2.411s] running install
+[2.416s] running install_lib
+[2.438s] running install_data
+[2.438s] running install_egg_info
+[2.459s] removing '/home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk-0.0.0-py3.12.egg-info' (and everything under it)
+[2.460s] Copying ../../build/scara_fk/scara_fk.egg-info to /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk-0.0.0-py3.12.egg-info
+[2.461s] running install_scripts
+[2.605s] Installing fk_node script to /home/tracy/rbe500/ros2_ws/install/scara_fk/bin
+[2.605s] writing list of installed files to '/home/tracy/rbe500/ros2_ws/build/scara_fk/install.log'
+[2.663s] Invoked command in '/home/tracy/rbe500/ros2_ws/src/scara_fk' returned '0': PYTHONPATH=/home/tracy/rbe500/ros2_ws/build/scara_fk/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/scara_fk build --build-base /home/tracy/rbe500/ros2_ws/build/scara_fk/build install --record /home/tracy/rbe500/ros2_ws/build/scara_fk/install.log --single-version-externally-managed install_data

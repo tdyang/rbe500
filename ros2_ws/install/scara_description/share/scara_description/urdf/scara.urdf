@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<robot name="scara" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- World -->
+    <link name = "world"/>
+
+    <!-- Base -->
+     <link name = "base_link">
+        <visual>
+            <geometry>
+                <box size = "0.12 0.12 0.05"/>
+            </geometry>
+            <material name = "blue"/>
+            <origin xyz = "0 0 0.025"/>
+        </visual>
+        <inertial>
+            <mass value = "1"/>
+            <origin xyz = "0 0 0.025" rpy = "0 0 0"/>
+            <inertia ixx = "1" ixy = "0" ixz = "0" iyy = "1" iyz = "0" izz = "1"/>
+        </inertial>
+        <collision>
+            <geometry>
+                <box size = "0.12 0.12 0.05"/>
+            </geometry>
+            <material name = "blue"/>
+            <origin xyz = "0 0 0.025"/>
+        </collision>
+     </link>
+
+     <joint name = "base2world" type = "fixed">
+        <parent link = "world"/>
+        <child link = "base_link"/>
+     </joint>
+
+     <!-- Link 1 -->
+     <link name = "link_1">
+        <visual>
+            <geometry>
+                <cylinder length = "0.45" radius = "0.04"/>
+            </geometry>
+            <material name = "white"/>
+            <origin xyz = "0 0 0.225"/>
+            </visual>
+            <inertial>
+                <mass value = "0.5"/>
+                <origin xyz = "0 0 0.225" rpy = "0 0 0"/>
+                <inertia ixx = "0.5" ixy = "0" ixz = "0" iyy = "0.5" iyz = "0" izz = "0.5"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <cylinder length = "0.45" radius = "0.04"/>
+                </geometry>
+                <origin xyz = "0 0 0.225"/>
+            </collision>
+            </link>
+
+    <!-- Joint 1 -->
+    <joint name = "joint_1" type = "revolute">
+        <parent link = "base_link"/>
+        <child link = "link_1"/>
+        <origin xyz = "0 0 0.05"/>
+        <axis xyz = "0 0 1"/>
+        <limit effort = "1000" lower = "-1.57" upper = "1.57" velocity = "0.5"/>
+    </joint>
+
+    <!-- Arm 1 -->
+        <link name = "arm_1">
+        <visual>
+            <geometry>
+                <box size = "0.4 0.05 0.05"/>
+            </geometry>
+            <material name = "white"/>
+            <origin xyz = "0.2 0 0"/>
+        </visual>
+        <inertial>
+            <mass value = "0.5"/>
+            <origin xyz = "0.2 0 0" rpy = "0 0 0"/>
+            <inertia ixx = "0.01" ixy = "0" ixz = "0" iyy = "0.01" iyz = "0" izz = "0.01"/>
+        </inertial>
+        <collision>
+            <geometry>
+                <box size = "0.4 0.05 0.05"/>
+            </geometry>
+            <origin xyz = "0.2 0 0"/>
+        </collision>
+        </link>
+
+        <joint name = "arm_1_attach" type = "fixed">
+            <parent link = "link_1"/>
+            <child link = "arm_1"/>
+            <origin xyz = "0 0 0.45"/>
+        </joint>
+
+    <!-- Link 2 -->
+        <link name = "link_2">
+        <visual>
+            <geometry>
+                <box size = "0.3 0.05 0.05"/>
+            </geometry>
+                <material name = "white"/>
+                <origin xyz = "0.15 0 0"/>
+        </visual>
+        <inertial>
+            <mass value = "0.3"/>
+            <origin xyz = "0.15 0 0" rpy = "0 0 0"/>
+            <inertia ixx = "0.01" ixy = "0" ixz = "0" iyy = "0.01" iyz = "0" izz = "0.01"/>
+        </inertial>
+        <collision>
+            <geometry>
+                <box size = "0.3 0.05 0.05"/>
+            </geometry>
+            <origin xyz = "0.15 0 0"/>
+        </collision>
+        </link>
+
+    <!-- Joint 2 -->
+    <joint name = "joint_2" type = "revolute">
+        <parent link = "arm_1"/>
+        <child link = "link_2"/>
+        <origin xyz = "0.4 0 0"/>
+        <axis xyz = "0 0 1"/>
+        <limit effort = "1000" lower = "-1.57" upper = "1.57" velocity = "0.5"/>
+        <dynamics damping = "0.2" friction = "0.1"/>
+    </joint>
+
+    <!-- EE Shaft-->
+    <link name = "link_3">
+        <visual>
+            <geometry>
+                <cylinder length = "0.2" radius = "0.02"/>
+            </geometry>
+            <material name = "red"/>
+            <origin xyz = "0 0 -0.1" rpy = "0 0 0" />
+        </visual>
+        <inertial>
+            <mass value = "0.1"/>
+            <origin xyz = "0 0 -0.1" rpy = "0 0 0"/>
+            <inertia ixx = "0.001" ixy = "0" ixz = "0" iyy = "0.001" iyz = "0" izz = "0.001"/>
+        </inertial>
+        <collision>
+            <geometry>
+                <cylinder length = "0.2" radius = "0.02"/>
+            </geometry>
+            <origin xyz = "0 0 -0.1"/>
+        </collision>
+    </link>
+
+    <!-- Joint 3 -->
+    <joint name = "joint_3" type = "prismatic">
+        <parent link = "link_2"/>
+        <child link = "link_3"/>
+        <origin xyz = "0.3 0 0"/>
+        <axis xyz = "0 0 1"/>
+        <limit effort = "1000" lower = "-0.2" upper = "0.2" velocity = "0.5"/>
+        <dynamics damping = "0.1" friction = "0.05"/>
+    </joint>
+
+    <!-- Tool -->
+     <link name = "tool0"/>
+     <joint name = "tool0_joint" type = "fixed">
+        <parent link = "link_3"/>
+        <child link = "tool0"/>
+        <origin xyz = "0 0 -0.2"/>
+    </joint>
+
+</robot>

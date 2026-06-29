@@ -1,0 +1,2 @@
+[console_scripts]
+fk_node = scara_fk.fk_node:main

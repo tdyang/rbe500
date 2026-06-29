@@ -1,0 +1,160 @@
+[0.000000] (-) TimerEvent: {}
+[0.000736] (-) JobUnselected: {'identifier': 'irb1400_fk'}
+[0.000797] (-) JobUnselected: {'identifier': 'quat_to_euler'}
+[0.001193] (-) JobUnselected: {'identifier': 'rbe500_hw1'}
+[0.001244] (-) JobUnselected: {'identifier': 'scara_description'}
+[0.001276] (scara_fk) JobQueued: {'identifier': 'scara_fk', 'dependencies': OrderedDict()}
+[0.001300] (scara_ik) JobQueued: {'identifier': 'scara_ik', 'dependencies': OrderedDict()}
+[0.001312] (scara_fk) JobStarted: {'identifier': 'scara_fk'}
+[0.015596] (scara_ik) JobStarted: {'identifier': 'scara_ik'}
+[0.099990] (-) TimerEvent: {}
+[0.200563] (-) TimerEvent: {}
+[0.244056] (scara_ik) JobProgress: {'identifier': 'scara_ik', 'progress': 'cmake'}
+[0.245904] (scara_ik) Command: {'cmd': ['/usr/bin/cmake', '/home/tracy/rbe500/ros2_ws/src/scara_ik', '-DCMAKE_INSTALL_PREFIX=/home/tracy/rbe500/ros2_ws/install/scara_ik'], 'cwd': '/home/tracy/rbe500/ros2_ws/build/scara_ik', 'env': OrderedDict({'PYTHON_BASIC_REPL': '1', 'USER': 'tracy', 'GIT_ASKPASS': '/home/tracy/.vscode-server/bin/7e7950df89d055b5a378379db9ee14290772148a/extensions/git/dist/askpass.sh', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/tracy', 'OLDPWD': '/home/tracy/rbe500', 'TERM_PROGRAM_VERSION': '1.126.0', 'NVM_BIN': '/home/tracy/.nvm/versions/node/v24.14.0/bin', 'VSCODE_IPC_HOOK_CLI': '/run/user/1000/vscode-ipc-b9c1f3df-a8fa-479a-b721-454adf78edef.sock', 'NVM_INC': '/home/tracy/.nvm/versions/node/v24.14.0/include/node', 'ROS_PYTHON_VERSION': '3', 'HOMEBREW_PREFIX': '/home/linuxbrew/.linuxbrew', 'VSCODE_GIT_ASKPASS_MAIN': '/home/tracy/.vscode-server/bin/7e7950df89d055b5a378379db9ee14290772148a/extensions/git/dist/askpass-main.js', 'VSCODE_GIT_ASKPASS_NODE': '/home/tracy/.vscode-server/bin/7e7950df89d055b5a378379db9ee14290772148a/node', 'PYDEVD_DISABLE_FILE_VALIDATION': '1', 'BUNDLED_DEBUGPY_PATH': '/home/tracy/.vscode-server/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/libs/debugpy', 'VSCODE_PYTHON_AUTOACTIVATE_GUARD': '1', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'WSL_DISTRO_NAME': 'Ubuntu-24.04', 'NVM_DIR': '/home/tracy/.nvm', 'WAYLAND_DISPLAY': 'wayland-0', 'INFOPATH': '/home/linuxbrew/.linuxbrew/share/info:/home/linuxbrew/.linuxbrew/share/info:', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'tracy', 'NAME': 'motherboard', 'WSL_INTEROP': '/run/WSL/766_interop', 'PULSE_SERVER': 'unix:/mnt/wslg/PulseServer', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'CLAUDE_CODE_SSE_PORT': '61663', 'TERM': 'xterm-256color', 'PATH': '/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/tracy/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand:/home/tracy/.vscode-server/data/User/globalStorage/github.copilot-chat/copilotCli:/home/tracy/.vscode-server/bin/7e7950df89d055b5a378379db9ee14290772148a/bin/remote-cli:/home/tracy/.local/bin:/opt/ros/jazzy/bin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/tracy/.nvm/versions/node/v24.14.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/Eclipse Adoptium/jdk-25.0.3.9-hotspot/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/110/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/120/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/120/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/120/DTS/Binn/:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/Program Files/MATLAB/R2024a/bin:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/DTS/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/160/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/160/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/160/DTS/Binn/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Strawberry/c/bin:/mnt/c/Strawberry/perl/site/bin:/mnt/c/Strawberry/perl/bin:/mnt/c/Users/tracy/AppData/Local/Programs/Python/Python313/Scripts/:/mnt/c/Users/tracy/AppData/Local/Programs/Python/Python313/:/mnt/c/Users/tracy/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/tracy/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/tracy/AppData/Roaming/npm:/mnt/c/Program Files/JetBrains/WebStorm 2023.3.5/bin:/mnt/c/Users/tracy/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/tracy/AppData/Local/Programs/MiKTeX/miktex/bin/x64/:/snap/bin:/home/tracy/.vscode-server/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts', 'HOMEBREW_CELLAR': '/home/linuxbrew/.linuxbrew/Cellar', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'VSCODE_DEBUGPY_ADAPTER_ENDPOINTS': '/home/tracy/.vscode-server/extensions/ms-python.debugpy-2026.6.0-linux-x64/.noConfigDebugAdapterEndpoints/endpoint-448a1a36486825ac.txt', 'LANG': 'C.UTF-8', 'PYTHONSTARTUP': '/home/tracy/.vscode-server/data/User/workspaceStorage/f878bec9357c5bc07e77fd66c56f3c8f/ms-python.python/pythonrc.py', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-2a2558c926.sock', 'TERM_PROGRAM': 'vscode', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'SHELL': '/bin/bash', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/tracy/rbe500/ros2_ws/build/scara_ik', 'COPILOT_DEBUG_NONCE': '49db4fd4cb082b841d1d8b67fc2068e4', 'NVM_CD_FLAGS': '', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'HOMEBREW_REPOSITORY': '/home/linuxbrew/.linuxbrew/Homebrew', 'COLCON': '1', 'WSL2_GUI_APPS_ENABLED': '1', 'HOSTTYPE': 'x86_64', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy', 'WSLENV': 'VSCODE_WSL_EXT_LOCATION/up:VSCODE_SERVER_TAR/up'}), 'shell': False}
+[0.303068] (-) TimerEvent: {}
+[0.403514] (-) TimerEvent: {}
+[0.504204] (-) TimerEvent: {}
+[0.604649] (-) TimerEvent: {}
+[0.627181] (scara_ik) StdoutLine: {'line': b'-- The C compiler identification is GNU 13.3.0\n'}
+[0.704797] (-) TimerEvent: {}
+[0.805314] (-) TimerEvent: {}
+[0.905776] (-) TimerEvent: {}
+[1.006325] (-) TimerEvent: {}
+[1.107001] (-) TimerEvent: {}
+[1.208199] (scara_fk) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/scara_fk', 'build', '--build-base', '/home/tracy/rbe500/ros2_ws/build/scara_fk/build', 'install', '--record', '/home/tracy/rbe500/ros2_ws/build/scara_fk/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/tracy/rbe500/ros2_ws/src/scara_fk', 'env': {'PYTHON_BASIC_REPL': '1', 'USER': 'tracy', 'GIT_ASKPASS': '/home/tracy/.vscode-server/bin/7e7950df89d055b5a378379db9ee14290772148a/extensions/git/dist/askpass.sh', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/tracy', 'OLDPWD': '/home/tracy/rbe500', 'TERM_PROGRAM_VERSION': '1.126.0', 'NVM_BIN': '/home/tracy/.nvm/versions/node/v24.14.0/bin', 'VSCODE_IPC_HOOK_CLI': '/run/user/1000/vscode-ipc-b9c1f3df-a8fa-479a-b721-454adf78edef.sock', 'NVM_INC': '/home/tracy/.nvm/versions/node/v24.14.0/include/node', 'ROS_PYTHON_VERSION': '3', 'HOMEBREW_PREFIX': '/home/linuxbrew/.linuxbrew', 'VSCODE_GIT_ASKPASS_MAIN': '/home/tracy/.vscode-server/bin/7e7950df89d055b5a378379db9ee14290772148a/extensions/git/dist/askpass-main.js', 'VSCODE_GIT_ASKPASS_NODE': '/home/tracy/.vscode-server/bin/7e7950df89d055b5a378379db9ee14290772148a/node', 'PYDEVD_DISABLE_FILE_VALIDATION': '1', 'BUNDLED_DEBUGPY_PATH': '/home/tracy/.vscode-server/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/libs/debugpy', 'VSCODE_PYTHON_AUTOACTIVATE_GUARD': '1', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'WSL_DISTRO_NAME': 'Ubuntu-24.04', 'NVM_DIR': '/home/tracy/.nvm', 'WAYLAND_DISPLAY': 'wayland-0', 'INFOPATH': '/home/linuxbrew/.linuxbrew/share/info:/home/linuxbrew/.linuxbrew/share/info:', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'tracy', 'NAME': 'motherboard', 'WSL_INTEROP': '/run/WSL/766_interop', 'PULSE_SERVER': 'unix:/mnt/wslg/PulseServer', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'CLAUDE_CODE_SSE_PORT': '61663', 'TERM': 'xterm-256color', 'PATH': '/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/tracy/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand:/home/tracy/.vscode-server/data/User/globalStorage/github.copilot-chat/copilotCli:/home/tracy/.vscode-server/bin/7e7950df89d055b5a378379db9ee14290772148a/bin/remote-cli:/home/tracy/.local/bin:/opt/ros/jazzy/bin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/tracy/.nvm/versions/node/v24.14.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/Eclipse Adoptium/jdk-25.0.3.9-hotspot/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/110/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/120/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/120/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/120/DTS/Binn/:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/Program Files/MATLAB/R2024a/bin:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/DTS/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/160/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/160/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/160/DTS/Binn/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Strawberry/c/bin:/mnt/c/Strawberry/perl/site/bin:/mnt/c/Strawberry/perl/bin:/mnt/c/Users/tracy/AppData/Local/Programs/Python/Python313/Scripts/:/mnt/c/Users/tracy/AppData/Local/Programs/Python/Python313/:/mnt/c/Users/tracy/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/tracy/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/tracy/AppData/Roaming/npm:/mnt/c/Program Files/JetBrains/WebStorm 2023.3.5/bin:/mnt/c/Users/tracy/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/tracy/AppData/Local/Programs/MiKTeX/miktex/bin/x64/:/snap/bin:/home/tracy/.vscode-server/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts', 'HOMEBREW_CELLAR': '/home/linuxbrew/.linuxbrew/Cellar', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'VSCODE_DEBUGPY_ADAPTER_ENDPOINTS': '/home/tracy/.vscode-server/extensions/ms-python.debugpy-2026.6.0-linux-x64/.noConfigDebugAdapterEndpoints/endpoint-448a1a36486825ac.txt', 'LANG': 'C.UTF-8', 'PYTHONSTARTUP': '/home/tracy/.vscode-server/data/User/workspaceStorage/f878bec9357c5bc07e77fd66c56f3c8f/ms-python.python/pythonrc.py', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-2a2558c926.sock', 'TERM_PROGRAM': 'vscode', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'SHELL': '/bin/bash', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/tracy/rbe500/ros2_ws/build/scara_fk', 'COPILOT_DEBUG_NONCE': '49db4fd4cb082b841d1d8b67fc2068e4', 'NVM_CD_FLAGS': '', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/tracy/rbe500/ros2_ws/build/scara_fk/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'HOMEBREW_REPOSITORY': '/home/linuxbrew/.linuxbrew/Homebrew', 'COLCON': '1', 'WSL2_GUI_APPS_ENABLED': '1', 'HOSTTYPE': 'x86_64', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor', 'WSLENV': 'VSCODE_WSL_EXT_LOCATION/up:VSCODE_SERVER_TAR/up'}, 'shell': False}
+[1.210372] (-) TimerEvent: {}
+[1.310799] (-) TimerEvent: {}
+[1.411366] (-) TimerEvent: {}
+[1.468797] (scara_fk) StdoutLine: {'line': b'running egg_info\n'}
+[1.469133] (scara_fk) StdoutLine: {'line': b'creating ../../build/scara_fk/scara_fk.egg-info\n'}
+[1.487661] (scara_fk) StdoutLine: {'line': b'writing ../../build/scara_fk/scara_fk.egg-info/PKG-INFO\n'}
+[1.488014] (scara_fk) StdoutLine: {'line': b'writing dependency_links to ../../build/scara_fk/scara_fk.egg-info/dependency_links.txt\n'}
+[1.488273] (scara_fk) StdoutLine: {'line': b'writing entry points to ../../build/scara_fk/scara_fk.egg-info/entry_points.txt\n'}
+[1.488638] (scara_fk) StdoutLine: {'line': b'writing requirements to ../../build/scara_fk/scara_fk.egg-info/requires.txt\n'}
+[1.488885] (scara_fk) StdoutLine: {'line': b'writing top-level names to ../../build/scara_fk/scara_fk.egg-info/top_level.txt\n'}
+[1.489010] (scara_fk) StdoutLine: {'line': b"writing manifest file '../../build/scara_fk/scara_fk.egg-info/SOURCES.txt'\n"}
+[1.511707] (-) TimerEvent: {}
+[1.526494] (scara_fk) StdoutLine: {'line': b"reading manifest file '../../build/scara_fk/scara_fk.egg-info/SOURCES.txt'\n"}
+[1.527207] (scara_fk) StdoutLine: {'line': b"writing manifest file '../../build/scara_fk/scara_fk.egg-info/SOURCES.txt'\n"}
+[1.527876] (scara_fk) StdoutLine: {'line': b'running build\n'}
+[1.528247] (scara_fk) StdoutLine: {'line': b'running build_py\n'}
+[1.528606] (scara_fk) StdoutLine: {'line': b'creating /home/tracy/rbe500/ros2_ws/build/scara_fk/build\n'}
+[1.528781] (scara_fk) StdoutLine: {'line': b'creating /home/tracy/rbe500/ros2_ws/build/scara_fk/build/lib\n'}
+[1.528940] (scara_fk) StdoutLine: {'line': b'creating /home/tracy/rbe500/ros2_ws/build/scara_fk/build/lib/scara_fk\n'}
+[1.529364] (scara_fk) StdoutLine: {'line': b'copying scara_fk/fk_node.py -> /home/tracy/rbe500/ros2_ws/build/scara_fk/build/lib/scara_fk\n'}
+[1.529658] (scara_fk) StdoutLine: {'line': b'copying scara_fk/__init__.py -> /home/tracy/rbe500/ros2_ws/build/scara_fk/build/lib/scara_fk\n'}
+[1.530014] (scara_fk) StdoutLine: {'line': b'running install\n'}
+[1.535773] (scara_fk) StdoutLine: {'line': b'running install_lib\n'}
+[1.555511] (scara_fk) StdoutLine: {'line': b'creating /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk\n'}
+[1.555852] (scara_fk) StdoutLine: {'line': b'copying /home/tracy/rbe500/ros2_ws/build/scara_fk/build/lib/scara_fk/fk_node.py -> /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk\n'}
+[1.556189] (scara_fk) StdoutLine: {'line': b'copying /home/tracy/rbe500/ros2_ws/build/scara_fk/build/lib/scara_fk/__init__.py -> /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk\n'}
+[1.556517] (scara_fk) StdoutLine: {'line': b'byte-compiling /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk/fk_node.py to fk_node.cpython-312.pyc\n'}
+[1.557878] (scara_fk) StdoutLine: {'line': b'byte-compiling /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk/__init__.py to __init__.cpython-312.pyc\n'}
+[1.558125] (scara_fk) StdoutLine: {'line': b'running install_data\n'}
+[1.558410] (scara_fk) StdoutLine: {'line': b'creating /home/tracy/rbe500/ros2_ws/install/scara_fk/share/ament_index\n'}
+[1.558604] (scara_fk) StdoutLine: {'line': b'creating /home/tracy/rbe500/ros2_ws/install/scara_fk/share/ament_index/resource_index\n'}
+[1.558897] (scara_fk) StdoutLine: {'line': b'creating /home/tracy/rbe500/ros2_ws/install/scara_fk/share/ament_index/resource_index/packages\n'}
+[1.559171] (scara_fk) StdoutLine: {'line': b'copying resource/scara_fk -> /home/tracy/rbe500/ros2_ws/install/scara_fk/share/ament_index/resource_index/packages\n'}
+[1.559385] (scara_fk) StdoutLine: {'line': b'copying package.xml -> /home/tracy/rbe500/ros2_ws/install/scara_fk/share/scara_fk\n'}
+[1.559680] (scara_fk) StdoutLine: {'line': b'running install_egg_info\n'}
+[1.579142] (scara_fk) StdoutLine: {'line': b'Copying ../../build/scara_fk/scara_fk.egg-info to /home/tracy/rbe500/ros2_ws/install/scara_fk/lib/python3.12/site-packages/scara_fk-0.0.0-py3.12.egg-info\n'}
+[1.580786] (scara_fk) StdoutLine: {'line': b'running install_scripts\n'}
+[1.612117] (-) TimerEvent: {}
+[1.708607] (scara_fk) StdoutLine: {'line': b'Installing fk_node script to /home/tracy/rbe500/ros2_ws/install/scara_fk/bin\n'}
+[1.709284] (scara_fk) StdoutLine: {'line': b"writing list of installed files to '/home/tracy/rbe500/ros2_ws/build/scara_fk/install.log'\n"}
+[1.712548] (-) TimerEvent: {}
+[1.738819] (scara_fk) CommandEnded: {'returncode': 0}
+[1.757594] (scara_fk) JobEnded: {'identifier': 'scara_fk', 'rc': 0}
+[1.812694] (-) TimerEvent: {}
+[1.913041] (-) TimerEvent: {}
+[1.931629] (scara_ik) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 13.3.0\n'}
+[2.013247] (-) TimerEvent: {}
+[2.113720] (-) TimerEvent: {}
+[2.214100] (-) TimerEvent: {}
+[2.316947] (-) TimerEvent: {}
+[2.419416] (-) TimerEvent: {}
+[2.519853] (-) TimerEvent: {}
+[2.622539] (-) TimerEvent: {}
+[2.724956] (-) TimerEvent: {}
+[2.825406] (-) TimerEvent: {}
+[2.925869] (-) TimerEvent: {}
+[3.026378] (-) TimerEvent: {}
+[3.079804] (scara_ik) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[3.126720] (-) TimerEvent: {}
+[3.227399] (-) TimerEvent: {}
+[3.328086] (-) TimerEvent: {}
+[3.430485] (-) TimerEvent: {}
+[3.507173] (scara_ik) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[3.515207] (scara_ik) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[3.515877] (scara_ik) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[3.516768] (scara_ik) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[3.531486] (-) TimerEvent: {}
+[3.634175] (-) TimerEvent: {}
+[3.691969] (scara_ik) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[3.736128] (-) TimerEvent: {}
+[3.839576] (-) TimerEvent: {}
+[3.940236] (-) TimerEvent: {}
+[4.042601] (-) TimerEvent: {}
+[4.119750] (scara_ik) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[4.127899] (scara_ik) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[4.128245] (scara_ik) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[4.128728] (scara_ik) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[4.143590] (-) TimerEvent: {}
+[4.144884] (scara_ik) StdoutLine: {'line': b'-- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)\n'}
+[4.246012] (-) TimerEvent: {}
+[4.291925] (scara_ik) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter \n'}
+[4.348641] (-) TimerEvent: {}
+[4.420916] (scara_ik) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)\n'}
+[4.433096] (scara_ik) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[4.449774] (-) TimerEvent: {}
+[4.550232] (-) TimerEvent: {}
+[4.650802] (-) TimerEvent: {}
+[4.751442] (-) TimerEvent: {}
+[4.761882] (scara_ik) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[4.833656] (scara_ik) StdoutLine: {'line': b'-- Found rosidl_adapter: 4.6.7 (/opt/ros/jazzy/share/rosidl_adapter/cmake)\n'}
+[4.841020] (scara_ik) StdoutLine: {'line': b'-- Found rclpy: 7.1.11 (/opt/ros/jazzy/share/rclpy/cmake)\n'}
+[4.852191] (-) TimerEvent: {}
+[4.959612] (-) TimerEvent: {}
+[5.060323] (-) TimerEvent: {}
+[5.160833] (-) TimerEvent: {}
+[5.175670] (scara_ik) StderrLine: {'line': b'\x1b[31mCMake Error at /opt/ros/jazzy/share/rosidl_adapter/cmake/rosidl_adapt_interfaces.cmake:57 (message):\n'}
+[5.175962] (scara_ik) StderrLine: {'line': b'  execute_process(/usr/bin/python3 -m rosidl_adapter --package-name scara_ik\n'}
+[5.176395] (scara_ik) StderrLine: {'line': b'  --arguments-file\n'}
+[5.176543] (scara_ik) StderrLine: {'line': b'  /home/tracy/rbe500/ros2_ws/build/scara_ik/rosidl_adapter__arguments__scara_ik.json\n'}
+[5.176682] (scara_ik) StderrLine: {'line': b'  --output-dir\n'}
+[5.176756] (scara_ik) StderrLine: {'line': b'  /home/tracy/rbe500/ros2_ws/build/scara_ik/rosidl_adapter/scara_ik\n'}
+[5.176821] (scara_ik) StderrLine: {'line': b'  --output-file\n'}
+[5.176883] (scara_ik) StderrLine: {'line': b'  /home/tracy/rbe500/ros2_ws/build/scara_ik/rosidl_adapter/scara_ik.idls)\n'}
+[5.176944] (scara_ik) StderrLine: {'line': b'  returned error code 1:\n'}
+[5.177002] (scara_ik) StderrLine: {'line': b'\n'}
+[5.177060] (scara_ik) StderrLine: {'line': b'  Traceback (most recent call last):\n'}
+[5.177118] (scara_ik) StderrLine: {'line': b'\n'}
+[5.177179] (scara_ik) StderrLine: {'line': b'    File "<frozen runpy>", line 198, in _run_module_as_main\n'}
+[5.177315] (scara_ik) StderrLine: {'line': b'    File "<frozen runpy>", line 88, in _run_code\n'}
+[5.177432] (scara_ik) StderrLine: {'line': b'    File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/__main__.py", line 19, in <module>\n'}
+[5.177536] (scara_ik) StderrLine: {'line': b'      sys.exit(main())\n'}
+[5.177622] (scara_ik) StderrLine: {'line': b'               ^^^^^^\n'}
+[5.177735] (scara_ik) StderrLine: {'line': b'    File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/main.py", line 53, in main\n'}
+[5.177807] (scara_ik) StderrLine: {'line': b'      abs_idl_file = convert_to_idl(\n'}
+[5.177873] (scara_ik) StderrLine: {'line': b'                     ^^^^^^^^^^^^^^^\n'}
+[5.177934] (scara_ik) StderrLine: {'line': b'    File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/__init__.py", line 24, in convert_to_idl\n'}
+[5.177997] (scara_ik) StderrLine: {'line': b'      return convert_srv_to_idl(\n'}
+[5.178124] (scara_ik) StderrLine: {'line': b'             ^^^^^^^^^^^^^^^^^^^\n'}
+[5.178193] (scara_ik) StderrLine: {'line': b'    File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/srv/__init__.py", line 28, in convert_srv_to_idl\n'}
+[5.178303] (scara_ik) StderrLine: {'line': b'      srv = parse_service_string(package_name, input_file.stem, content)\n'}
+[5.178374] (scara_ik) StderrLine: {'line': b'            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'}
+[5.178465] (scara_ik) StderrLine: {'line': b'    File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/parser.py", line 851, in parse_service_string\n'}
+[5.178578] (scara_ik) StderrLine: {'line': b'      raise InvalidServiceSpecification(\n'}
+[5.178708] (scara_ik) StderrLine: {'line': b'\n'}
+[5.178824] (scara_ik) StderrLine: {'line': b'  rosidl_adapter.parser.InvalidServiceSpecification: Could not find separator\n'}
+[5.178939] (scara_ik) StderrLine: {'line': b"  '---' between request and response\n"}
+[5.179054] (scara_ik) StderrLine: {'line': b'\n'}
+[5.179123] (scara_ik) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[5.179187] (scara_ik) StderrLine: {'line': b'  /opt/ros/jazzy/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:132 (rosidl_adapt_interfaces)\n'}
+[5.179250] (scara_ik) StderrLine: {'line': b'  CMakeLists.txt:9 (rosidl_generate_interfaces)\n'}
+[5.179308] (scara_ik) StderrLine: {'line': b'\n'}
+[5.179446] (scara_ik) StderrLine: {'line': b'\x1b[0m\n'}
+[5.179517] (scara_ik) StdoutLine: {'line': b'-- Configuring incomplete, errors occurred!\n'}
+[5.187410] (scara_ik) CommandEnded: {'returncode': 1}
+[5.207298] (scara_ik) JobEnded: {'identifier': 'scara_ik', 'rc': 1}
+[5.218340] (-) EventReactorShutdown: {}

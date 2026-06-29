@@ -1,0 +1,31 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from scara_ik/srv/ScaraIK.srv
+// generated code does not contain a copyright notice
+
+
+module scara_ik {
+  module srv {
+    @verbatim (language="comment", text=
+      "Request: desired end-effector position")
+    struct ScaraIK_Request {
+      double x;
+
+      double y;
+
+      double z;
+    };
+    @verbatim (language="comment", text=
+      "Response: joint values and success flag")
+    struct ScaraIK_Response {
+      double theta1;
+
+      double theta2;
+
+      double d3;
+
+      boolean success;
+
+      string message;
+    };
+  };
+};
