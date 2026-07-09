@@ -1,2 +1,0 @@
-[console_scripts]
-ik_node = scara_ik_node.ik_node:main

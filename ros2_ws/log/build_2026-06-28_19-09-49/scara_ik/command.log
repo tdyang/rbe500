@@ -1,2 +1,0 @@
-Invoking command in '/home/tracy/rbe500/ros2_ws/build/scara_ik': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /home/tracy/rbe500/ros2_ws/src/scara_ik -DCMAKE_INSTALL_PREFIX=/home/tracy/rbe500/ros2_ws/install/scara_ik
-Invoked command in '/home/tracy/rbe500/ros2_ws/build/scara_ik' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /home/tracy/rbe500/ros2_ws/src/scara_ik -DCMAKE_INSTALL_PREFIX=/home/tracy/rbe500/ros2_ws/install/scara_ik

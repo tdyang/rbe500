@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="scara">
-    <xacro:include filename="$(find scara_description)/urdf/scara.urdf"/>
-    <xacro:include filename="$(find scara_description)/config/materials.urdf"/>
-    <xacro:include filename="$(find scara_description)/ros2_control/scara.ros2_control.urdf"/>
-</robot>

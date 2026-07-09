@@ -1,5 +1,0 @@
-[0.017s] Invoking command in '/home/tracy/rbe500/ros2_ws/build/scara_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/tracy/rbe500/ros2_ws/install/scara_fk:/home/tracy/rbe500/ros2_ws/install/rbe500_hw1:/home/tracy/rbe500/ros2_ws/install/quat_to_euler:/home/tracy/rbe500/ros2_ws/install/irb1400_fk:/opt/ros/jazzy /usr/bin/cmake --build /home/tracy/rbe500/ros2_ws/build/scara_description -- -j16 -l16
-[0.076s] [0mCMake Error: The source directory "/home/tracy/rbe500/ros2_ws/src/scara_description/scara_description" does not exist.
-[0.076s] Specify --help for usage, or press the help button on the CMake GUI.[0m
-[0.078s] gmake: *** [Makefile:226: cmake_check_build_system] Error 1
-[0.081s] Invoked command in '/home/tracy/rbe500/ros2_ws/build/scara_description' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/tracy/rbe500/ros2_ws/install/scara_fk:/home/tracy/rbe500/ros2_ws/install/rbe500_hw1:/home/tracy/rbe500/ros2_ws/install/quat_to_euler:/home/tracy/rbe500/ros2_ws/install/irb1400_fk:/opt/ros/jazzy /usr/bin/cmake --build /home/tracy/rbe500/ros2_ws/build/scara_description -- -j16 -l16

@@ -1,8 +1,0 @@
-setup.py
-scara_ik/__init__.py
-scara_ik.egg-info/PKG-INFO
-scara_ik.egg-info/SOURCES.txt
-scara_ik.egg-info/dependency_links.txt
-scara_ik.egg-info/top_level.txt
-scara_ik/srv/__init__.py
-scara_ik/srv/_scara_ik.py
