@@ -8,6 +8,7 @@ find_package(rclpy REQUIRED)
 # Generate the custom service interface
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/ScaraIK.srv"
+  "srv/SetJointPosition.srv"   # add this line
 )
 
 # Install the Python executable node

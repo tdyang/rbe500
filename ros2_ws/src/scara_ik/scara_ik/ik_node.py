@@ -6,7 +6,7 @@ Service:  /scara/compute_ik  (scara_ik/srv/ScaraIK)
   Request:  x, y, z   — desired EE position in base frame
   Response: theta1, theta2, d3, success, message
 
-IK derivation (algebraic, Lecture 4 — 2-link planar arm extended):
+IK derivation:
   From FK:
     px = -a2*s12 - a1*s1
     py =  a2*c12 + a1*c1

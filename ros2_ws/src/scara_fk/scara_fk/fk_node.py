@@ -2,13 +2,13 @@
 """
 Forward Kinematics node for SCARA robot (RBE 500 PA1 Part 2).
 
-SCARA DH parameters (from lecture notes):
+SCARA DH parameters:
   l1  = 0.45 m  — vertical height of joint 1 above base
   a1  = 0.40 m  — length of arm_1  (link between joint 1 and joint 2)
   a2  = 0.30 m  — length of link_2 (link between joint 2 and joint 3)
   d3  — prismatic displacement along z (joint_3, range -0.20 to +0.20 m)
 
-FK closed-form result (T3_0 from Lecture 2 slides):
+FK closed-form result:
   c12 = cos(θ1 + θ2),  s12 = sin(θ1 + θ2)
   c1  = cos(θ1),       s1  = sin(θ1)
 

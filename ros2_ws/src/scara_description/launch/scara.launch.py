@@ -23,7 +23,6 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-
         gz_sim,
 
         Node(
@@ -33,26 +32,32 @@ def generate_launch_description():
             output='screen'
         ),
 
+        Node(
+            package='scara_controller',
+            executable='controller_node',
+            name='scara_controller',
+            output='screen'
+        ),
+
         TimerAction(period=5.0, actions=[
             Node(
                 package='ros_gz_sim',
                 executable='create',
-                arguments=[
-                    '-topic', '/robot_description',
-                    '-name', 'scara',
-                    '-x', '0', '-y', '0', '-z', '0.1'
-                ],
+                arguments=['-topic', '/robot_description', '-name', 'scara',
+                        '-x', '0', '-y', '0', '-z', '0.1'],
                 output='screen'
             ),
         ]),
 
-        # Use ros2_gz_bridge with correct remapping for joint states
         TimerAction(period=7.0, actions=[
             Node(
                 package='ros_gz_bridge',
                 executable='parameter_bridge',
+                name='joint_state_bridge',
                 arguments=[
-                    '/world/empty/model/scara/joint_state@sensor_msgs/msg/JointState[gz.msgs.Model'
+                    '/world/empty/model/scara/joint_state'
+                    '@sensor_msgs/msg/JointState'
+                    '[gz.msgs.Model'
                 ],
                 ros_arguments=['--remap',
                     '/world/empty/model/scara/joint_state:=/joint_states'],
@@ -60,4 +65,15 @@ def generate_launch_description():
             ),
         ]),
 
+        TimerAction(period=7.0, actions=[
+            Node(
+                package='ros_gz_bridge',
+                executable='parameter_bridge',
+                name='effort_bridge',
+                arguments=[
+                    '/scara/joint3_cmd@std_msgs/msg/Float64]gz.msgs.Double'
+                ],
+                output='screen'
+            ),
+        ]),
     ])
