@@ -76,7 +76,7 @@ class ScaraControllerNode(Node):
         )
 
         # ── CSV logging setup ─────────────────────────────────────────────────
-        log_dir = os.path.expanduser('~/rbe500/logs')
+        log_dir = os.path.expanduser('~/ros2_ws/src/scara_controller/logs')
         os.makedirs(log_dir, exist_ok = True)
         log_path = os.path.join(
           log_dir, f'joint3_log_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
