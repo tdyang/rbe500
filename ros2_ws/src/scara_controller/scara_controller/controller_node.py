@@ -19,6 +19,10 @@ from sensor_msgs.msg import JointState
 from std_msgs.msg import Float64
 from scara_ik.srv import SetJointPosition
 
+import os
+import csv
+from datetime import datetime
+
 # ── PD Gains ──────────────────────────────────────────────────────────────────
 KP = 800.0    # proportional gain  [N/m]
 KD = 80.0     # derivative gain    [N·s/m]
@@ -70,6 +74,18 @@ class ScaraControllerNode(Node):
             '  Call: ros2 service call /scara/set_joint3_position '
             'scara_ik/srv/SetJointPosition "{position: 0.1}"'
         )
+
+        # ── CSV logging setup ─────────────────────────────────────────────────
+        log_dir = os.path.expanduser('~/rbe500/logs')
+        os.makedirs(log_dir, exist_ok = True)
+        log_path = os.path.join(
+          log_dir, f'joint3_log_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
+        self.log_file = open(log_path, 'w', newline = '')
+        self.log_writer = csv.writer(self.log_file)
+        self.log_writer.writerow(['time_s', 'ref_position', 'cur_position'])
+        self.start_time = self.get_clock().now()
+        self.get_logger().info(f'Part 2d: logging joint3 data to {log_path}')
+
 
     def joint_state_cb(self, msg: JointState):
         if 'joint_3' in msg.name:
@@ -123,6 +139,15 @@ class ScaraControllerNode(Node):
             f'err={error:.4f}  effort={effort:.2f}'
         )
 
+        # ── Log control cycle ─────────────────────────────────────────────────
+        t_elapsed = (now - self.start_time).nanoseconds * 1e-9
+        self.log_writer.writerow([t_elapsed, self.ref_position, self.cur_position])
+        self.log_file.flush()
+      
+      # ── Close log file on shutdown ──────────────────────────────────────────
+      def destroy_node(self):
+          self.log_file.close()
+          super().destroy_node()
 
 def main(args=None):
     rclpy.init(args=args)
