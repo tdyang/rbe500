@@ -285,6 +285,60 @@ ros2 service call /scara/set_joint3_position \
 
 \subsection{Plotting Current and Reference Postions of Joint 3 (Part 2d)}
 
+The reference and measured positions of \texttt{joint\_3} were recorded in a CSV file and then plotted in MATLAB against elapsed time.
+
+\begin{lstlisting}[style=ros, language=Python,
+    caption={CSV logging setup in \texttt{controller\_node.py}}]
+log_dir = os.path.expanduser('~/ros2_ws/src/scara_controller/logs')
+os.makedirs(log_dir, exist_ok=True)
+log_path = os.path.join(log_dir, 'joint3_log.csv')
+self.log_file = open(log_path, 'w', newline='')
+self.log_writer = csv.writer(self.log_file)
+self.log_writer.writerow(['time_s', 'ref_position', 'cur_position'])
+self.start_time = self.get_clock().now()
+\end{lstlisting}
+
+For every control cycle, the elapsed time, reference position, and measured position are recorded in separate rows.
+
+\begin{lstlisting}[style=ros, language=Python,
+    caption={Logging a control cycle in \texttt{control\_loop}}]
+t_elapsed = (now - self.start_time).nanoseconds * 1e-9
+self.log_writer.writerow([t_elapsed, self.ref_position, self.cur_position])
+self.log_file.flush()
+\end{lstlisting}
+
+A clean shutdown is ensured with an additional \texttt{destroy\_node}:
+
+\begin{lstlisting}[style=ros, language=Python,
+    caption={Clean shutdown}]
+def destroy_node(self):
+    self.log_file.close()
+    super().destroy_node()
+\end{lstlisting}
+
+The MATLAB script reads the CSV file, extracts the time, reference position, and measured position data from it, then plots the reference position and measured position against time.
+
+\begin{lstlisting}[style=ros, language=Matlab,
+    caption={\texttt{plot\_joint3.m}}]
+log_dir = fullfile(getenv('HOME'), 'ros2_ws', 'src', 'scara_controller', 'logs');
+data = readmatrix(fullfile(log_dir, 'joint3_log.csv'));
+
+t   = data(:,1);
+ref = data(:,2);
+cur = data(:,3);
+
+figure;
+plot(t, ref, 'r--', 'LineWidth', 1.5); hold on;
+plot(t, cur, 'b-', 'LineWidth', 1.5);
+grid on;
+xlabel('Time (s)');
+ylabel('Joint 3 Position (m)');
+title('Joint 3 Position Tracking: Reference vs. Measured');
+legend('Reference', 'Measured', 'Location', 'best');
+\end{lstlisting}
+
+The resulting figure is shown in Figure~\ref{fig:matlab}.
+
 \subsection{Results}
 
 \begin{figure}[H]
