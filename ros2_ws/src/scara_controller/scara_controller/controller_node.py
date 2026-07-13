@@ -79,7 +79,7 @@ class ScaraControllerNode(Node):
         log_dir = os.path.expanduser('~/ros2_ws/src/scara_controller/logs')
         os.makedirs(log_dir, exist_ok = True)
         log_path = os.path.join(
-          log_dir, f'joint3_log_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
+          log_dir, f'joint3_log_.csv')
         self.log_file = open(log_path, 'w', newline = '')
         self.log_writer = csv.writer(self.log_file)
         self.log_writer.writerow(['time_s', 'ref_position', 'cur_position'])
