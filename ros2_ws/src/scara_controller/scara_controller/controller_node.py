@@ -21,7 +21,6 @@ from scara_ik.srv import SetJointPosition
 
 import os
 import csv
-from datetime import datetime
 
 # ── PD Gains ──────────────────────────────────────────────────────────────────
 KP = 800.0    # proportional gain  [N/m]
@@ -79,7 +78,7 @@ class ScaraControllerNode(Node):
         log_dir = os.path.expanduser('~/ros2_ws/src/scara_controller/logs')
         os.makedirs(log_dir, exist_ok = True)
         log_path = os.path.join(
-          log_dir, f'joint3_log_.csv')
+          log_dir, 'joint3_log.csv')
         self.log_file = open(log_path, 'w', newline = '')
         self.log_writer = csv.writer(self.log_file)
         self.log_writer.writerow(['time_s', 'ref_position', 'cur_position'])
@@ -143,11 +142,11 @@ class ScaraControllerNode(Node):
         t_elapsed = (now - self.start_time).nanoseconds * 1e-9
         self.log_writer.writerow([t_elapsed, self.ref_position, self.cur_position])
         self.log_file.flush()
-      
-      # ── Close log file on shutdown ──────────────────────────────────────────
-      def destroy_node(self):
-          self.log_file.close()
-          super().destroy_node()
+
+    # ── Close log file on shutdown ────────────────────────────────────────────
+    def destroy_node(self):
+        self.log_file.close()
+        super().destroy_node()
 
 def main(args=None):
     rclpy.init(args=args)
