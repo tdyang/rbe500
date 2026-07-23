@@ -23,12 +23,13 @@ import os
 import csv
 
 # ── PD Gains ──────────────────────────────────────────────────────────────────
-KP = 800.0    # proportional gain  [N/m]
-KD = 80.0     # derivative gain    [N·s/m]
+JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3']
+KP = {'joint_1': 50.0, 'joint_2': 50.0, 'joint_3': 800.0}
+KD = {'joint_1': 5.0, 'joint_2': 5.0, 'joint_3': 80.0}
 
 # ── Joint limits ──────────────────────────────────────────────────────────────
-J3_MIN = -0.20
-J3_MAX =  0.20
+J3_MIN = {'joint_1': -1.57, 'joint_2': -1.57, 'joint_3': -0.20}
+J3_MAX = {'joint_1': 1.57, 'joint_2': 1.57, 'joint_3': 0.20}
 EFFORT_LIMIT = 1000.0
 
 
@@ -38,9 +39,9 @@ class ScaraControllerNode(Node):
         super().__init__('scara_controller')
 
         # ── State ─────────────────────────────────────────────────────────────
-        self.ref_position = 0.0
-        self.cur_position = 0.0
-        self.prev_error   = 0.0
+        self.ref_position = {j: 0.0 for j in JOINT_NAMES}
+        self.cur_position = {j: 0.0 for j in JOINT_NAMES}
+        self.prev_error = {j: 0.0 for j in JOINT_NAMES}
         self.prev_time    = None
 
         # ── Subscriber ────────────────────────────────────────────────────────
@@ -52,18 +53,20 @@ class ScaraControllerNode(Node):
         )
 
         # ── Publisher ─────────────────────────────────────────────────────────
-        self.cmd_pub = self.create_publisher(
-            Float64,
-            '/scara/joint3_cmd',
-            10
-        )
+        self.cmd_pub = {
+            j: self.create_publisher(Float64, f'/scara/{j.replace("_","")}_cmd', 10)
+            for j in JOINT_NAMES
+        }
 
         # ── Service ───────────────────────────────────────────────────────────
-        self.srv = self.create_service(
-            SetJointPosition,
-            '/scara/set_joint3_position',
-            self.set_position_cb
-        )
+        self.srv = {
+            j: self.create_service(
+                SetJointPosition,
+                f'/scara/set_{j.replace("_"),"")}_position',
+                self.make_set_position_cb(j)
+            )
+            for j in JOINT_NAMES
+        }
 
         # ── Control loop at 100 Hz ────────────────────────────────────────────
         self.timer = self.create_timer(0.01, self.control_loop)
@@ -87,26 +90,29 @@ class ScaraControllerNode(Node):
 
 
     def joint_state_cb(self, msg: JointState):
-        if 'joint_3' in msg.name:
-            idx = msg.name.index('joint_3')
-            self.cur_position = msg.position[idx]
-
-    def set_position_cb(self, request, response):
-        target = request.position
-
-        if not (J3_MIN <= target <= J3_MAX):
-            response.success = False
-            response.message = (
-                f'Requested {target:.4f} m outside limits [{J3_MIN}, {J3_MAX}] m.'
-            )
-            self.get_logger().warn(response.message)
-            return response
-
-        self.ref_position = target
-        response.success = True
-        response.message = f'Reference position set to {target:.4f} m'
-        self.get_logger().info(response.message)
-        return response
+        for name, val in zip(msg.name, msg.position):
+            if name in self.cur_position:
+                self.cur_position[name] = val
+              
+  def make_set_position_cb(self, joint_name):
+    """Returns a service callback bound to a specific joint."""
+      def set_position_cb(self, request, response):
+          target = request.position
+  
+          if not (J3_MIN <= target <= J3_MAX):
+              response.success = False
+              response.message = (
+                  f'Requested {target:.4f} m outside limits [{J3_MIN}, {J3_MAX}] m.'
+              )
+              self.get_logger().warn(response.message)
+              return response
+  
+          self.ref_position = target
+          response.success = True
+          response.message = f'Reference position set to {target:.4f} m'
+          self.get_logger().info(response.message)
+          return response
+      return set_position_cb
 
     def control_loop(self):
         """PD control law at 100 Hz."""
@@ -122,25 +128,31 @@ class ScaraControllerNode(Node):
         self.prev_time = now
 
         # PD law
-        error     = self.ref_position - self.cur_position
-        error_dot = (error - self.prev_error) / dt
-        self.prev_error = error
-
-        effort = KP * error + KD * error_dot
-        effort = max(-EFFORT_LIMIT, min(EFFORT_LIMIT, effort))
-
-        msg = Float64()
-        msg.data = effort
-        self.cmd_pub.publish(msg)
-
-        self.get_logger().debug(
-            f'PD | ref={self.ref_position:.4f}  cur={self.cur_position:.4f}  '
-            f'err={error:.4f}  effort={effort:.2f}'
-        )
+        for j in JOINT_NAMES:
+          error     = self.ref_position[j] - self.cur_position[j]
+          error_dot = (error - self.prev_error[j]) / dt
+          self.prev_error[j] = error
+  
+          effort = KP[j] * error + KD[j] * error_dot
+          effort = max(-EFFORT_LIMIT, min(EFFORT_LIMIT, effort))
+  
+          msg = Float64()
+          msg.data = effort
+          self.cmd_pub[j].publish(msg)
+  
+          self.get_logger().debug(
+              f'{j} | ref={self.ref_position[j]:.4f}  cur={self.cur_position[j]:.4f}  '
+              f'err={error:.4f}  effort={effort:.2f}'
+          )
 
         # ── Log control cycle ─────────────────────────────────────────────────
         t_elapsed = (now - self.start_time).nanoseconds * 1e-9
-        self.log_writer.writerow([t_elapsed, self.ref_position, self.cur_position])
+        self.log_writer.writerow([
+            t_elapsed,
+            self.ref_position['joint_1'], self.cur_position['joint_1'],
+            self.ref_position['joint_2'], self.cur_position['joint_2'],
+            self.ref_position['joint_3'], self.cur_position['joint_3']
+        ])
         self.log_file.flush()
 
     # ── Close log file on shutdown ────────────────────────────────────────────
