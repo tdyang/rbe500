@@ -84,7 +84,12 @@ class ScaraControllerNode(Node):
           log_dir, 'joint3_log.csv')
         self.log_file = open(log_path, 'w', newline = '')
         self.log_writer = csv.writer(self.log_file)
-        self.log_writer.writerow(['time_s', 'ref_position', 'cur_position'])
+        self.log_writer.writerow([
+            'time_s', 
+            'ref_joint1', 'cur_joint1',
+            'ref_joint2', 'cur_joint2',
+            'ref_joint3', 'cur_joint3'
+        ])
         self.start_time = self.get_clock().now()
         self.get_logger().info(f'Part 2d: logging joint3 data to {log_path}')
 
