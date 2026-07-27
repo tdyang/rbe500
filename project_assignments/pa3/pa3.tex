@@ -138,7 +138,17 @@ class VelocityKinematicsNode(Node):
     def inv_vel_cb(self, request, response):
         xdot = [request.vx, request.vy, request.vz]
         Jv = jacobian(self.theta1, self.theta2)
-        q1, q2, q3 = np.linalg.solve(Jv, xdot)
+        try:
+            q1, q2, q3 = np.linalg.solve(Jv, xdot)
+        except np.linalg.LinAlgError:
+            response.theta1_dot, response.theta2_dot, response.d3_dot = 0.0, 0.0, 0.0
+            response.success = False
+            response.message = (
+                f'Singular Jacobian at theta1={self.theta1:.4f}, theta2={self.theta2:.4f} '
+                '(theta2 near 0 or pi) -- no unique joint-velocity solution.'
+            )
+            self.get_logger().warn(response.message)
+            return response
         response.theta1_dot, response.theta2_dot, response.d3_dot = q1, q2, q3
         response.success = True
         return response
@@ -156,10 +166,15 @@ if __name__ == '__main__':
     main()
 \end{lstlisting}
 
-In the velocity kinematics node, there are two main functions: forward velocity callback and inverse velocity callback. 
+In the velocity kinematics node, there are two main functions: forward velocity callback and inverse velocity callback.
 These functions take theta 1 and theta 2 from a joint state subscriber and calculate the jacobian using a separate function.
 With the jacobian, the forward velocity function multiplies it with qdot to get vx, vy, and vz.
-The inverse velocity function solves for qdot in the same equation. This equation can fail if the determenant of Jv is 0.
+The inverse velocity function solves for qdot in the same equation. This equation can fail if the determinant of Jv is 0
+(at $\theta_2 = 0$ or $\pi$, the arm's fully-extended or fully-folded configuration), so \texttt{np.linalg.solve} is
+wrapped in a \texttt{try}/\texttt{except} on \texttt{LinAlgError}: on a singular Jacobian the service returns
+\texttt{success = false} with a diagnostic message instead of letting the exception propagate and crash the node. This
+matters beyond Part 1 itself -- Part 4's constant-velocity node (Section 4) calls this service every cycle and depends
+on it failing gracefully rather than taking the whole service down.
 
 % ===========================================================================
 \section{Extending the Position Controller (Part 2)}
@@ -171,7 +186,8 @@ In part 2, the URDF and controller node were updated to extend the position cont
 
 \subsection{URDF Changes}
 
-The joint types for joints 1 and 2 were changed back from fixed to revolute. Then, the Gazebo plugin block was updated with joints 1 and 2.
+The joint types for joints 1 and 2 were changed back from fixed to revolute. The Gazebo actuation
+plugin block was then updated so all three joints are driven by a real effort input.
 
 \begin{lstlisting}[style=ros, language=XML,
     caption={joint\_1 and joint\_2 reverted to revolute}]
@@ -189,8 +205,22 @@ The joint types for joints 1 and 2 were changed back from fixed to revolute. The
 </joint>
 \end{lstlisting}
 
+\paragraph{Actuation plugin debugging.} The first attempt used Gazebo's
+\texttt{JointPositionController} plugin per joint, with the controller node publishing its
+computed PD effort onto that plugin's command topic. In simulation the joints simply refused to
+move: the commanded values (tens of N$\cdot$m) were being interpreted as absolute \emph{position}
+targets rather than effort, and since those targets fell far outside each joint's $\pm 1.57$ rad
+limit the plugin applied no torque at all. Setting \texttt{use\_force\_commands} on that plugin did
+not change this behavior. The fix was to drop \texttt{JointPositionController} entirely and drive
+every joint through a single \texttt{JointController} plugin per joint in force mode -- the same
+plugin type used for Part 3 -- confirmed by publishing a raw effort value directly to its command
+topic and observing the joint move exactly as expected. Both the position controller (Part 2) and
+the velocity controller (Part 3) now publish onto the same \texttt{/scara/jointX\_effort\_cmd}
+topic per joint; only one of the two ROS nodes is ever run at a time; running both simultaneously
+would have them fight over which effort value the single plugin instance actually applies.
+
 \begin{lstlisting}[style=ros, language=XML,
-    caption={Extended Gazebo plugin block}]
+    caption={Single force-mode actuation plugin per joint}]
 <gazebo>
     <plugin filename="gz-sim-joint-state-publisher-system"
             name="gz::sim::systems::JointStatePublisher">
@@ -200,23 +230,26 @@ The joint types for joints 1 and 2 were changed back from fixed to revolute. The
         <joint_name>joint_3</joint_name>
     </plugin>
 
-    <plugin filename="gz-sim-joint-position-controller-system"
-            name="gz::sim::systems::JointPositionController">
+    <plugin filename="gz-sim-joint-controller-system"
+            name="gz::sim::systems::JointController">
         <joint_name>joint_1</joint_name>
-        <topic>/scara/joint1_cmd</topic>
-        <p_gain>1</p_gain><i_gain>0</i_gain><d_gain>0</d_gain>
+        <use_force_commands>true</use_force_commands>
+        <topic>/scara/joint1_effort_cmd</topic>
+        <p_gain>1</p_gain><i_gain>0</i_gain>
     </plugin>
-    <plugin filename="gz-sim-joint-position-controller-system"
-            name="gz::sim::systems::JointPositionController">
+    <plugin filename="gz-sim-joint-controller-system"
+            name="gz::sim::systems::JointController">
         <joint_name>joint_2</joint_name>
-        <topic>/scara/joint2_cmd</topic>
-        <p_gain>1</p_gain><i_gain>0</i_gain><d_gain>0</d_gain>
+        <use_force_commands>true</use_force_commands>
+        <topic>/scara/joint2_effort_cmd</topic>
+        <p_gain>1</p_gain><i_gain>0</i_gain>
     </plugin>
-    <plugin filename="gz-sim-joint-position-controller-system"
-            name="gz::sim::systems::JointPositionController">
+    <plugin filename="gz-sim-joint-controller-system"
+            name="gz::sim::systems::JointController">
         <joint_name>joint_3</joint_name>
-        <topic>/scara/joint3_cmd</topic>
-        <p_gain>1</p_gain><i_gain>0</i_gain><d_gain>0</d_gain>
+        <use_force_commands>true</use_force_commands>
+        <topic>/scara/joint3_effort_cmd</topic>
+        <p_gain>1</p_gain><i_gain>0</i_gain>
     </plugin>
 </gazebo>
 \end{lstlisting}
@@ -241,7 +274,7 @@ self.cur_position = {j: 0.0 for j in JOINT_NAMES}
 self.prev_error   = {j: 0.0 for j in JOINT_NAMES}
 
 self.cmd_pub = {
-    j: self.create_publisher(Float64, f'/scara/{j.replace("_","")}_cmd', 10)
+    j: self.create_publisher(Float64, f'/scara/{j.replace("_","")}_effort_cmd', 10)
     for j in JOINT_NAMES
 }
 
@@ -295,5 +328,212 @@ def control_loop(self):
         msg.data = effort
         self.cmd_pub[j].publish(msg)
 \end{lstlisting}
+
+% ===========================================================================
+\section{Velocity Controllers (Part 3)}
+% ===========================================================================
+
+\subsection{Overview}
+
+Each joint gets a PI velocity controller rather than reusing the Part 2 PD
+law:
+\[
+  \tau = K_p \, e_v + K_i \int e_v \, dt, \qquad e_v = \dot q_{ref} - \dot q_{cur}.
+\]
+Differentiating the velocity signal (as PD would) amplifies measurement
+noise; the integral term instead removes steady-state error without a
+derivative term.
+
+The controller subscribes to \texttt{/joint\_states} for measured velocity
+and to per-joint \texttt{/scara/jointX\_vel\_ref} topics for the reference,
+publishing effort on the same \texttt{/scara/jointX\_effort\_cmd} topics
+used in Part 2 (only one of the two ROS controllers runs at a time).
+
+\subsection{Velocity Controller Node}
+
+\begin{lstlisting}[style=ros, language=Python,
+    caption={PI gains and per-joint state/topics}]
+JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3']
+
+KP = {'joint_1': 20.0, 'joint_2': 0.5, 'joint_3': 8.0}
+KI = {'joint_1': 2.0,  'joint_2': 0.4, 'joint_3': 1.0}
+
+self.ref_velocity = {j: 0.0 for j in JOINT_NAMES}
+self.cur_velocity = {j: 0.0 for j in JOINT_NAMES}
+self.integral     = {j: 0.0 for j in JOINT_NAMES}
+
+self.ref_subs = {
+    j: self.create_subscription(
+        Float64, f'/scara/{j.replace("_", "")}_vel_ref', self.make_ref_cb(j), 10)
+    for j in JOINT_NAMES
+}
+self.cmd_pub = {
+    j: self.create_publisher(Float64, f'/scara/{j.replace("_", "")}_effort_cmd', 10)
+    for j in JOINT_NAMES
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=ros, language=Python,
+    caption={PI control loop}]
+for j in JOINT_NAMES:
+    error = self.ref_velocity[j] - self.cur_velocity[j]
+
+    self.integral[j] += error * dt
+    self.integral[j] = max(-INTEGRAL_LIMIT, min(INTEGRAL_LIMIT, self.integral[j]))
+
+    effort = KP[j] * error + KI[j] * self.integral[j]
+    effort = max(-EFFORT_LIMIT, min(EFFORT_LIMIT, effort))
+
+    msg = Float64()
+    msg.data = effort
+    self.cmd_pub[j].publish(msg)
+\end{lstlisting}
+
+The integral term is clamped (anti-windup) so a large or long-lived error
+-- e.g.\ while a joint accelerates toward a step reference -- cannot
+saturate the integrator and cause overshoot once the error shrinks.
+
+\subsection{Gain Tuning}
+
+Gains were first tuned per joint in isolation, temporarily setting the
+other two joints' URDF types to \texttt{fixed} (reverted afterward).
+Equal gains ($K_p{=}20,\,K_i{=}2$) worked for joint\_1 and joint\_2 alone;
+joint\_3 needed a much larger pair ($K_p{=}400,\,K_i{=}40$).
+
+Running all three joints together for Part 4 exposed a problem isolated
+tuning missed: joint\_2 and joint\_3 chattered against their $\pm 0.5$
+rad/s limits instead of settling, while joint\_1 tracked smoothly. The
+cause is inertia mismatch -- link\_2's $I_{zz}{=}0.01$ is $\sim\!50\times$
+smaller than link\_1's ($I_{zz}{=}0.5$), and link\_3 is only 0.1 kg -- so
+the same effort gain that gives joint\_1 a modest, damped acceleration
+gives joint\_2/3 a huge one, overshooting the limit and oscillating
+against it. Scaling gains down roughly with each joint's effective inertia
+(to $K_p{=}0.5,\,K_i{=}0.4$ for joint\_2) killed the chatter.
+
+That fix went too far, though. With chatter gone, Figure~\ref{fig:velocity}
+still showed joint\_2's measured velocity visibly lagging its reference by
+a growing gap that never closed within the test window, while joint\_1 and
+joint\_3 tracked cleanly. The difference is what each joint is being asked
+to track: joint\_1 and joint\_3's Part 4 references are nearly constant, so
+the step-response-style gains from isolated tuning still apply, but
+joint\_2's reference is a continuously-decreasing ramp -- holding a
+constant $+y$ Cartesian velocity requires $\theta_2$ to keep shrinking (see
+Part 4) -- and gains damped enough to avoid step-input chatter were too
+sluggish to keep up with a moving target. joint\_2's gains were raised back
+up from that low point until the lag closed, without reintroducing the
+original chattering:
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+ & joint\_1 & joint\_2 & joint\_3 \\
+\midrule
+$K_p$ & 20.0 & 3.0 & 8.0 \\
+$K_i$ & 2.0  & 1.5 & 1.0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Lesson: gains tuned on a single isolated joint against a step input aren't
+guaranteed stable, or even sufficient, once the full coupled system runs
+together against a reference that keeps moving -- both need to be
+re-checked against the actual Part 4 conditions, not just the isolated
+step-response test from Part 3.
+
+% ===========================================================================
+\section{Constant Velocity Reference (Part 4)}
+% ===========================================================================
+
+\subsection{Overview}
+
+Part 4 drives the end effector in a straight $+y$ line by holding a
+constant Cartesian velocity $(\dot x, \dot y, \dot z) = (0, v_y, 0)$ and
+converting it to joint rates via the Part 1 inverse velocity service. Since
+the Jacobian depends on the current configuration, this is re-solved on a
+timer as the robot moves rather than solved once.
+
+\begin{lstlisting}[style=ros, language=Python,
+    caption={constant\_velocity\_node.py --- Part 4}]
+JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3']
+VY = 0.05  # m/s, constant end-effector velocity in +y
+
+class ConstantVelocityNode(Node):
+
+    def __init__(self):
+        super().__init__('constant_velocity_node')
+        self.cli = self.create_client(EEToJointVelocity, '/scara/ee_to_joint_velocity')
+        self.ref_pub = {
+            j: self.create_publisher(Float64, f'/scara/{j.replace("_","")}_vel_ref', 10)
+            for j in JOINT_NAMES
+        }
+        self.pending = False
+        self.timer = self.create_timer(0.05, self.timer_cb)  # 20 Hz
+
+    def timer_cb(self):
+        if self.pending:
+            return
+        req = EEToJointVelocity.Request()
+        req.vx, req.vy, req.vz = 0.0, VY, 0.0
+        self.pending = True
+        future = self.cli.call_async(req)
+        future.add_done_callback(self.response_cb)
+
+    def response_cb(self, future):
+        self.pending = False
+        resp = future.result()
+        if not resp.success:
+            self.get_logger().warn('Inverse velocity solve failed (near singularity?)')
+            return
+        qdot = {'joint_1': resp.theta1_dot, 'joint_2': resp.theta2_dot, 'joint_3': resp.d3_dot}
+        for j in JOINT_NAMES:
+            self.ref_pub[j].publish(Float64(data=qdot[j]))
+\end{lstlisting}
+
+The service call is asynchronous (\texttt{call\_async} with a
+\texttt{done\_callback}) since a blocking wait inside the same executor
+would deadlock the node against its own response.
+
+Two failure modes are handled. First, $\det(J_v) = a_1 a_2 \sin\theta_2 =
+0$ at $\theta_2{=}0$: Part 1 now returns \texttt{success = false} instead
+of raising a linear-algebra exception, and this node just skips that
+cycle's reference rather than crashing -- so the robot must first be moved
+off $\theta_2{=}0$ using the Part 2 position controller. Second, a
+constant $+y$ velocity can itself drive $\theta_2$ back toward zero over
+time, so required joint rates grow the longer the reference is held and
+the arm can hit joint limits within seconds. The results below use a short
+window from a start pose well clear of $\theta_2{=}0$; a robust
+implementation would detect this drift and stop or replan before
+saturating.
+
+\subsection{Logging and Plotting}
+
+The Part 3 velocity controller logs reference and measured velocity for
+all three joints to \texttt{velocity\_log.csv} at each 100 Hz control
+cycle, in the same format as the Part 2 position log.
+
+\begin{lstlisting}[style=ros, language=Matlab,
+    caption={\texttt{plot\_velocity.m}}]
+data = readmatrix(fullfile(script_dir, 'velocity_log.csv'));
+t = data(:,1);
+for i = 1:3
+    ref = data(:, 2*i);
+    cur = data(:, 2*i + 1);
+    subplot(3,1,i);
+    plot(t, ref, 'r--', 'LineWidth', 1.5); hold on;
+    plot(t, cur, 'b-', 'LineWidth', 1.5);
+    grid on; xlabel('Time (s)'); legend('Reference', 'Measured');
+end
+\end{lstlisting}
+
+\subsection{Results}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{screenshots/velocity_plot.png}
+    \caption{Reference vs.\ measured joint velocity for all three joints
+             while tracking a constant $+y$ end-effector velocity of
+             $v_y = 0.05$ m/s.}
+    \label{fig:velocity}
+\end{figure}
 
 \end{document}

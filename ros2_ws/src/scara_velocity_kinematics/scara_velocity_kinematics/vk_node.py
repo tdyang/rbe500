@@ -45,7 +45,17 @@ class VelocityKinematicsNode(Node):
     def inv_vel_cb(self, request, response):
         xdot = [request.vx, request.vy, request.vz]
         Jv = jacobian(self.theta1, self.theta2)
-        q1, q2, q3 = np.linalg.solve(Jv, xdot)
+        try:
+            q1, q2, q3 = np.linalg.solve(Jv, xdot)
+        except np.linalg.LinAlgError:
+            response.theta1_dot, response.theta2_dot, response.d3_dot = 0.0, 0.0, 0.0
+            response.success = False
+            response.message = (
+                f'Singular Jacobian at theta1={self.theta1:.4f}, theta2={self.theta2:.4f} '
+                '(theta2 near 0 or pi) -- no unique joint-velocity solution.'
+            )
+            self.get_logger().warn(response.message)
+            return response
         response.theta1_dot, response.theta2_dot, response.d3_dot = q1, q2, q3
         response.success = True
         return response

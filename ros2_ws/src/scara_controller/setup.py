@@ -21,6 +21,8 @@ setup(
     entry_points={
         'console_scripts': [
             'controller_node = scara_controller.controller_node:main',
+            'scara_velocity_controller_node = scara_controller.velocity_controller_node:main',
+            'scara_constant_velocity_node = scara_controller.constant_velocity_node:main',
         ],
     },
 )

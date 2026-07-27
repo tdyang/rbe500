@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Position controller node for SCARA robot (RBE 500 PA2 Part 2a/2b).
+Position controller node for SCARA robot, extended to all joints (RBE 500 PA3 Part 2).
 
-Subscribes: /joint_states  (sensor_msgs/JointState)  — from gz bridge
-Publishes:  /scara/joint3_cmd  (std_msgs/Float64)  — effort command to Gazebo
-Service:    /scara/set_joint3_position  (scara_ik/SetJointPosition)
+Subscribes: /joint_states              (sensor_msgs/JointState)      — from gz bridge
+Publishes:  /scara/jointX_cmd          (std_msgs/Float64) x3         — effort command to Gazebo
+Services:   /scara/set_jointX_position (scara_ik/SetJointPosition) x3
 
 PD controller implemented here. The Gazebo JointPositionController plugin
 is set to p=1, i=0, d=0 so it acts as a direct pass-through, applying
@@ -28,8 +28,8 @@ KP = {'joint_1': 50.0, 'joint_2': 50.0, 'joint_3': 800.0}
 KD = {'joint_1': 5.0, 'joint_2': 5.0, 'joint_3': 80.0}
 
 # ── Joint limits ──────────────────────────────────────────────────────────────
-J3_MIN = {'joint_1': -1.57, 'joint_2': -1.57, 'joint_3': -0.20}
-J3_MAX = {'joint_1': 1.57, 'joint_2': 1.57, 'joint_3': 0.20}
+JOINT_MIN = {'joint_1': -1.57, 'joint_2': -1.57, 'joint_3': -0.20}
+JOINT_MAX = {'joint_1': 1.57, 'joint_2': 1.57, 'joint_3': 0.20}
 EFFORT_LIMIT = 1000.0
 
 
@@ -42,7 +42,7 @@ class ScaraControllerNode(Node):
         self.ref_position = {j: 0.0 for j in JOINT_NAMES}
         self.cur_position = {j: 0.0 for j in JOINT_NAMES}
         self.prev_error = {j: 0.0 for j in JOINT_NAMES}
-        self.prev_time    = None
+        self.prev_time = None
 
         # ── Subscriber ────────────────────────────────────────────────────────
         self.js_sub = self.create_subscription(
@@ -52,17 +52,17 @@ class ScaraControllerNode(Node):
             10
         )
 
-        # ── Publisher ─────────────────────────────────────────────────────────
+        # ── Publishers ────────────────────────────────────────────────────────
         self.cmd_pub = {
-            j: self.create_publisher(Float64, f'/scara/{j.replace("_","")}_cmd', 10)
+            j: self.create_publisher(Float64, f'/scara/{j.replace("_","")}_effort_cmd', 10)
             for j in JOINT_NAMES
         }
 
-        # ── Service ───────────────────────────────────────────────────────────
+        # ── Services ──────────────────────────────────────────────────────────
         self.srv = {
             j: self.create_service(
                 SetJointPosition,
-                f'/scara/set_{j.replace("_"),"")}_position',
+                f'/scara/set_{j.replace("_","")}_position',
                 self.make_set_position_cb(j)
             )
             for j in JOINT_NAMES
@@ -78,46 +78,45 @@ class ScaraControllerNode(Node):
         )
 
         # ── CSV logging setup ─────────────────────────────────────────────────
-        log_dir = os.path.expanduser('~/ros2_ws/src/scara_controller/logs')
-        os.makedirs(log_dir, exist_ok = True)
-        log_path = os.path.join(
-          log_dir, 'joint3_log.csv')
-        self.log_file = open(log_path, 'w', newline = '')
+        log_dir = os.path.expanduser('~/rbe500/ros2_ws/src/scara_controller/logs')
+        os.makedirs(log_dir, exist_ok=True)
+        log_path = os.path.join(log_dir, 'joint3_log.csv')
+        self.log_file = open(log_path, 'w', newline='')
         self.log_writer = csv.writer(self.log_file)
         self.log_writer.writerow([
-            'time_s', 
+            'time_s',
             'ref_joint1', 'cur_joint1',
             'ref_joint2', 'cur_joint2',
             'ref_joint3', 'cur_joint3'
         ])
         self.start_time = self.get_clock().now()
-        self.get_logger().info(f'Part 2d: logging joint3 data to {log_path}')
-
+        self.get_logger().info(f'Part 2d: logging joint data to {log_path}')
 
     def joint_state_cb(self, msg: JointState):
         for name, val in zip(msg.name, msg.position):
             if name in self.cur_position:
                 self.cur_position[name] = val
-              
-  def make_set_position_cb(self, joint_name):
-    """Returns a service callback bound to a specific joint."""
-      def set_position_cb(self, request, response):
-          target = request.position
-  
-          if not (J3_MIN <= target <= J3_MAX):
-              response.success = False
-              response.message = (
-                  f'Requested {target:.4f} m outside limits [{J3_MIN}, {J3_MAX}] m.'
-              )
-              self.get_logger().warn(response.message)
-              return response
-  
-          self.ref_position = target
-          response.success = True
-          response.message = f'Reference position set to {target:.4f} m'
-          self.get_logger().info(response.message)
-          return response
-      return set_position_cb
+
+    def make_set_position_cb(self, joint_name):
+        """Returns a service callback bound to a specific joint."""
+        def set_position_cb(request, response):
+            target = request.position
+
+            if not (JOINT_MIN[joint_name] <= target <= JOINT_MAX[joint_name]):
+                response.success = False
+                response.message = (
+                    f'Requested {target:.4f} outside limits '
+                    f'[{JOINT_MIN[joint_name]}, {JOINT_MAX[joint_name]}] for {joint_name}.'
+                )
+                self.get_logger().warn(response.message)
+                return response
+
+            self.ref_position[joint_name] = target
+            response.success = True
+            response.message = f'{joint_name} reference set to {target:.4f}'
+            self.get_logger().info(response.message)
+            return response
+        return set_position_cb
 
     def control_loop(self):
         """PD control law at 100 Hz."""
@@ -134,21 +133,21 @@ class ScaraControllerNode(Node):
 
         # PD law
         for j in JOINT_NAMES:
-          error     = self.ref_position[j] - self.cur_position[j]
-          error_dot = (error - self.prev_error[j]) / dt
-          self.prev_error[j] = error
-  
-          effort = KP[j] * error + KD[j] * error_dot
-          effort = max(-EFFORT_LIMIT, min(EFFORT_LIMIT, effort))
-  
-          msg = Float64()
-          msg.data = effort
-          self.cmd_pub[j].publish(msg)
-  
-          self.get_logger().debug(
-              f'{j} | ref={self.ref_position[j]:.4f}  cur={self.cur_position[j]:.4f}  '
-              f'err={error:.4f}  effort={effort:.2f}'
-          )
+            error = self.ref_position[j] - self.cur_position[j]
+            error_dot = (error - self.prev_error[j]) / dt
+            self.prev_error[j] = error
+
+            effort = KP[j] * error + KD[j] * error_dot
+            effort = max(-EFFORT_LIMIT, min(EFFORT_LIMIT, effort))
+
+            msg = Float64()
+            msg.data = effort
+            self.cmd_pub[j].publish(msg)
+
+            self.get_logger().debug(
+                f'{j} | ref={self.ref_position[j]:.4f}  cur={self.cur_position[j]:.4f}  '
+                f'err={error:.4f}  effort={effort:.2f}'
+            )
 
         # ── Log control cycle ─────────────────────────────────────────────────
         t_elapsed = (now - self.start_time).nanoseconds * 1e-9
@@ -164,6 +163,7 @@ class ScaraControllerNode(Node):
     def destroy_node(self):
         self.log_file.close()
         super().destroy_node()
+
 
 def main(args=None):
     rclpy.init(args=args)

@@ -24,7 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'velocity_kinematics_node = scara_velocity_kinematics.velocity_kinematics_node:main'
+            'velocity_kinematics_node = scara_velocity_kinematics.vk_node:main'
         ],
     },
 )

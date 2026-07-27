@@ -73,29 +73,41 @@
             <joint_name>joint_2</joint_name>
             <joint_name>joint_3</joint_name>
         </plugin>
-        <plugin filename="gz-sim-joint-position-controller-system"
-                name="gz::sim::systems::JointPositionController">
+        <!--
+          A single force-mode JointController per joint is the sole effort
+          actuator in this model. JointPositionController was tried first
+          but does not honor use_force_commands the way JointController
+          does -- with it, published values were being read as absolute
+          position targets rather than effort, so the PD position node's
+          output (tens of N*m) was rejected as wildly out-of-limits and no
+          torque was ever applied. Using one proven force-input plugin per
+          joint, shared by whichever Python controller (position PD for
+          Part 2, velocity PI for Part 3/4) is running at the time, avoids
+          that mismatch and avoids two plugins fighting over one joint.
+        -->
+        <plugin filename="gz-sim-joint-controller-system"
+                name="gz::sim::systems::JointController">
             <joint_name>joint_1</joint_name>
-            <topic>/scara/joint1_cmd</topic>
+            <use_force_commands>true</use_force_commands>
+            <topic>/scara/joint1_effort_cmd</topic>
             <p_gain>1</p_gain>
             <i_gain>0</i_gain>
-            <d_gain>0</d_gain>
         </plugin>
-        <plugin filename="gz-sim-joint-position-controller-system"
-                name="gz::sim::systems::JointPositionController">
+        <plugin filename="gz-sim-joint-controller-system"
+                name="gz::sim::systems::JointController">
             <joint_name>joint_2</joint_name>
-            <topic>/scara/joint2_cmd</topic>
+            <use_force_commands>true</use_force_commands>
+            <topic>/scara/joint2_effort_cmd</topic>
             <p_gain>1</p_gain>
             <i_gain>0</i_gain>
-            <d_gain>0</d_gain>
         </plugin>
-        <plugin filename="gz-sim-joint-position-controller-system"
-                name="gz::sim::systems::JointPositionController">
+        <plugin filename="gz-sim-joint-controller-system"
+                name="gz::sim::systems::JointController">
             <joint_name>joint_3</joint_name>
-            <topic>/scara/joint3_cmd</topic>
+            <use_force_commands>true</use_force_commands>
+            <topic>/scara/joint3_effort_cmd</topic>
             <p_gain>1</p_gain>
             <i_gain>0</i_gain>
-            <d_gain>0</d_gain>
         </plugin>
     </gazebo>
 

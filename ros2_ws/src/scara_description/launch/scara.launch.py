@@ -71,9 +71,29 @@ def generate_launch_description():
                 executable='parameter_bridge',
                 name='effort_bridge',
                 arguments=[
-                    '/scara/joint3_cmd@std_msgs/msg/Float64]gz.msgs.Double'
+                    '/scara/joint1_effort_cmd@std_msgs/msg/Float64]gz.msgs.Double',
+                    '/scara/joint2_effort_cmd@std_msgs/msg/Float64]gz.msgs.Double',
+                    '/scara/joint3_effort_cmd@std_msgs/msg/Float64]gz.msgs.Double',
                 ],
                 output='screen'
             ),
         ]),
+
+        Node(
+            package='scara_velocity_kinematics',
+            executable='velocity_kinematics_node',
+            name='scara_velocity_kinematics',
+            output='screen'
+        ),
+
+        # scara_velocity_controller_node is intentionally NOT launched here.
+        # It publishes to the same /scara/jointX_effort_cmd topics as
+        # controller_node (Part 2) -- both feed the single force-mode
+        # JointController plugin per joint. Running both ROS controllers at
+        # once means whichever one publishes last each cycle wins, so the
+        # velocity controller's idle (~0) command would fight and override
+        # the position controller's command. Reach your start pose with the
+        # position services first, stop `scara_controller`, then run
+        # scara_velocity_controller_node by hand:
+        #   ros2 run scara_controller scara_velocity_controller_node
     ])
