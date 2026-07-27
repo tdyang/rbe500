@@ -420,8 +420,21 @@ joint\_2's reference is a continuously-decreasing ramp -- holding a
 constant $+y$ Cartesian velocity requires $\theta_2$ to keep shrinking (see
 Part 4) -- and gains damped enough to avoid step-input chatter were too
 sluggish to keep up with a moving target. joint\_2's gains were raised back
-up from that low point until the lag closed, without reintroducing the
-original chattering:
+up from that low point, which shrank the gap substantially without
+reintroducing chatter. In Figure~\ref{fig:velocity}, the tracking error
+opens to about 0.07 rad/s as soon as the ramp reference begins and then
+steadily narrows to about 0.03 rad/s by the end of the 4.5 s window as the
+integral term continues to accumulate -- it is still visibly closing, not
+flat, but has not fully reached zero within the window. This is expected
+PI behavior against a ramp, not leftover mistuning: a PI controller drives
+steady-state error to zero against a \emph{step} reference, but a
+continuously-\emph{ramping} reference like joint\_2's (holding a constant
+$+y$ Cartesian velocity requires $\theta_2$ to keep shrinking) produces a
+persistent, bounded tracking error that shrinks with $K_i$ but is only
+driven fully to zero with infinite gain or a feedforward term -- here, the
+time-derivative of the commanded joint rate -- added to the PI output. The
+gains below reduce that error to a small, shrinking offset rather than
+removing it outright:
 
 \begin{center}
 \begin{tabular}{lccc}
@@ -532,7 +545,13 @@ end
     \includegraphics[width=0.85\textwidth]{screenshots/velocity_plot.png}
     \caption{Reference vs.\ measured joint velocity for all three joints
              while tracking a constant $+y$ end-effector velocity of
-             $v_y = 0.05$ m/s.}
+             $v_y = 0.05$ m/s. joint\_1 tracks its near-constant reference
+             tightly; joint\_2 tracks its ramping reference with the small
+             residual lag discussed in Section 3.4; joint\_3 correctly
+             remains at zero throughout, since a purely $+y$ Cartesian
+             motion requires no $\dot d_3$ -- this is the expected result
+             of the third row of the Jacobian, not an unused or broken
+             axis.}
     \label{fig:velocity}
 \end{figure}
 
