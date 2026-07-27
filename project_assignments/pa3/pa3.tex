@@ -1,0 +1,299 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{textcomp}
+\usepackage{titlesec}
+\usepackage{parskip}
+
+% Code listing style
+\lstdefinestyle{ros}{
+    backgroundcolor=\color{gray!10},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red!70!black},
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    tabsize=4,
+    showstringspaces=false
+}
+
+\lstdefinestyle{bash}{
+    backgroundcolor=\color{black!90},
+    basicstyle=\ttfamily\small\color{white},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{
+    \vspace{-1cm}
+    \large RBE 500 --- Foundations of Robotics \\[0.4em]
+    \LARGE \textbf{Project Assignment 3} \\[0.4em]
+    \large Worcester Polytechnic Institute
+}
+\author{Tracy Yang \and Kyle Yee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% ===========================================================================
+\section{Velocity-Level Kinematics (Part 1)}
+% ===========================================================================
+
+\subsection{Overview}
+
+For part 1, a new node was implemented that serves two functions: 
+taking joint velocities and converting them to end effector velocities, 
+and taking end effector velocities and converting them to joint velocities.
+
+\subsection{Service Definitions}
+
+Two new services were created in the \texttt{velocity\_kinematics} package.
+
+\begin{lstlisting}[style=ros, caption={JointToEEVelocity.srv}]
+float64 theta1_dot
+float64 theta2_dot
+float64 d3_dot
+---
+float64 vx
+float64 vy
+float64 vz
+bool success
+string message
+\end{lstlisting}
+
+\begin{lstlisting}[style=ros, caption={EEToJointVelocity.srv}]
+float64 vx
+float64 vy
+float64 vz
+---
+float64 theta1_dot
+float64 theta2_dot
+float64 d3_dot
+bool success
+string message
+\end{lstlisting}
+
+\subsection{Velocity Kinematics Node}
+
+\begin{lstlisting}[style=ros, language=Python,
+    caption={velocity\_kinematics\_node.py}]
+import rclpy
+import numpy as np
+from rclpy.node import Node
+from sensor_msgs.msg import JointState
+from velocity_kinematics.srv import JointToEEVelocity, EEToJointVelocity
+
+A1 = 0.40
+A2 = 0.30
+
+
+def jacobian(theta1, theta2):
+    s1, c1 = np.sin(theta1), np.cos(theta1)
+    s12, c12 = np.sin(theta1 + theta2), np.cos(theta1 + theta2)
+    return np.array([
+        [-A1*s1 - A2*s12, -A2*s12, 0],
+        [ A1*c1 + A2*c12,  A2*c12, 0],
+        [ 0,               0,      1]
+    ])
+
+
+class VelocityKinematicsNode(Node):
+
+    def __init__(self):
+        super().__init__('velocity_kinematics_node')
+        self.theta1 = 0.0
+        self.theta2 = 0.0
+
+        self.create_subscription(JointState, '/joint_states', self.joint_state_cb, 10)
+        self.create_service(JointToEEVelocity, '/scara/joint_to_ee_velocity', self.fwd_vel_cb)
+        self.create_service(EEToJointVelocity, '/scara/ee_to_joint_velocity', self.inv_vel_cb)
+
+    def joint_state_cb(self, msg):
+        if 'joint_1' in msg.name:
+            self.theta1 = msg.position[msg.name.index('joint_1')]
+        if 'joint_2' in msg.name:
+            self.theta2 = msg.position[msg.name.index('joint_2')]
+
+    def fwd_vel_cb(self, request, response):
+        qdot = [request.theta1_dot, request.theta2_dot, request.d3_dot]
+        vx, vy, vz = jacobian(self.theta1, self.theta2) @ qdot
+        response.vx, response.vy, response.vz = vx, vy, vz
+        response.success = True
+        return response
+
+    def inv_vel_cb(self, request, response):
+        xdot = [request.vx, request.vy, request.vz]
+        Jv = jacobian(self.theta1, self.theta2)
+        q1, q2, q3 = np.linalg.solve(Jv, xdot)
+        response.theta1_dot, response.theta2_dot, response.d3_dot = q1, q2, q3
+        response.success = True
+        return response
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = VelocityKinematicsNode()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+In the velocity kinematics node, there are two main functions: forward velocity callback and inverse velocity callback. 
+These functions take theta 1 and theta 2 from a joint state subscriber and calculate the jacobian using a separate function.
+With the jacobian, the forward velocity function multiplies it with qdot to get vx, vy, and vz.
+The inverse velocity function solves for qdot in the same equation. This equation can fail if the determenant of Jv is 0.
+
+% ===========================================================================
+\section{Extending the Position Controller (Part 2)}
+% ===========================================================================
+
+\subsection{Overview}
+
+In part 2, the URDF and controller node were updated to extend the position controller from part 2.
+
+\subsection{URDF Changes}
+
+The joint types for joints 1 and 2 were changed back from fixed to revolute. Then, the Gazebo plugin block was updated with joints 1 and 2.
+
+\begin{lstlisting}[style=ros, language=XML,
+    caption={joint\_1 and joint\_2 reverted to revolute}]
+<joint name="joint_1" type="revolute">
+    <parent link="base_link"/><child link="link_1"/>
+    <origin xyz="0 0 0.5"/><axis xyz="0 0 1"/>
+    <limit effort="1000" lower="-1.57" upper="1.57" velocity="0.5"/>
+</joint>
+
+<joint name="joint_2" type="revolute">
+    <parent link="arm_1"/><child link="link_2"/>
+    <origin xyz="0.4 0 0"/><axis xyz="0 0 1"/>
+    <limit effort="1000" lower="-1.57" upper="1.57" velocity="0.5"/>
+    <dynamics damping="0.2" friction="0.1"/>
+</joint>
+\end{lstlisting}
+
+\begin{lstlisting}[style=ros, language=XML,
+    caption={Extended Gazebo plugin block}]
+<gazebo>
+    <plugin filename="gz-sim-joint-state-publisher-system"
+            name="gz::sim::systems::JointStatePublisher">
+        <topic>/world/empty/model/scara/joint_state</topic>
+        <joint_name>joint_1</joint_name>
+        <joint_name>joint_2</joint_name>
+        <joint_name>joint_3</joint_name>
+    </plugin>
+
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+        <joint_name>joint_1</joint_name>
+        <topic>/scara/joint1_cmd</topic>
+        <p_gain>1</p_gain><i_gain>0</i_gain><d_gain>0</d_gain>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+        <joint_name>joint_2</joint_name>
+        <topic>/scara/joint2_cmd</topic>
+        <p_gain>1</p_gain><i_gain>0</i_gain><d_gain>0</d_gain>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+        <joint_name>joint_3</joint_name>
+        <topic>/scara/joint3_cmd</topic>
+        <p_gain>1</p_gain><i_gain>0</i_gain><d_gain>0</d_gain>
+    </plugin>
+</gazebo>
+\end{lstlisting}
+
+\subsection{Controller Node Changes}
+
+To reuse the same position controller from part 2, it had to be adjusted to work for multiple joints. 
+This was done by creating dictionaries for each of the stored values. Now, each of the variables 
+that were originally just for a singular value have values for each of the joints.
+
+\begin{lstlisting}[style=ros, language=Python,
+    caption={Per-joint state, publishers, and services}]
+JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3']
+
+KP = {'joint_1': 50.0, 'joint_2': 50.0, 'joint_3': 800.0}
+KD = {'joint_1': 5.0,  'joint_2': 5.0,  'joint_3': 80.0}
+JOINT_MIN = {'joint_1': -1.57, 'joint_2': -1.57, 'joint_3': -0.20}
+JOINT_MAX = {'joint_1':  1.57, 'joint_2':  1.57, 'joint_3':  0.20}
+
+self.ref_position = {j: 0.0 for j in JOINT_NAMES}
+self.cur_position = {j: 0.0 for j in JOINT_NAMES}
+self.prev_error   = {j: 0.0 for j in JOINT_NAMES}
+
+self.cmd_pub = {
+    j: self.create_publisher(Float64, f'/scara/{j.replace("_","")}_cmd', 10)
+    for j in JOINT_NAMES
+}
+
+self.srv = {
+    j: self.create_service(
+        SetJointPosition,
+        f'/scara/set_{j.replace("_","")}_position',
+        self.make_set_position_cb(j)
+    )
+    for j in JOINT_NAMES
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=ros, language=Python,
+    caption={Callback factory --- binds a joint name to its own service callback}]
+def make_set_position_cb(self, joint_name):
+    def set_position_cb(request, response):
+        target = request.position
+        if not (JOINT_MIN[joint_name] <= target <= JOINT_MAX[joint_name]):
+            response.success = False
+            response.message = f'Requested {target:.4f} outside limits for {joint_name}.'
+            return response
+        self.ref_position[joint_name] = target
+        response.success = True
+        response.message = f'{joint_name} reference set to {target:.4f}'
+        return response
+    return set_position_cb
+\end{lstlisting}
+
+\begin{lstlisting}[style=ros, language=Python,
+    caption={PD control loop, generalized to all three joints}]
+def control_loop(self):
+    now = self.get_clock().now()
+    if self.prev_time is None:
+        self.prev_time = now
+        return
+    dt = (now - self.prev_time).nanoseconds * 1e-9
+    if dt <= 0.0:
+        return
+    self.prev_time = now
+
+    for j in JOINT_NAMES:
+        error = self.ref_position[j] - self.cur_position[j]
+        error_dot = (error - self.prev_error[j]) / dt
+        self.prev_error[j] = error
+
+        effort = KP[j] * error + KD[j] * error_dot
+        effort = max(-EFFORT_LIMIT, min(EFFORT_LIMIT, effort))
+
+        msg = Float64()
+        msg.data = effort
+        self.cmd_pub[j].publish(msg)
+\end{lstlisting}
+
+\end{document}
